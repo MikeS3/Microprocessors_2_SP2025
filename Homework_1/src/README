@@ -1,0 +1,9 @@
+Skeleton code for Homework 1. Look for TODOs in the following files:
+
+rp2040-crt.S		The C runtime
+rp2040-vectors.S	Vector table declaration
+rp2040.ld			Linker script
+
+To test everything, you may use the provided Makefile. If your implementation
+is syntactically correct then you will get no errors. You may reuse the
+provided Makefile with any required modifications for all projects.
