@@ -7,14 +7,14 @@
 
 OUTPUT_ARCH(arm)
 /* set the output format using OUTPUT_FORMAT */
-OUTPUT_FORMAT("elf32-little")
+OUTPUT_FORMAT(elf32-littlearm)
 /* set the entry point to __reset using ENTRY */
 ENTRY(__reset)
 /* memories */
 MEMORY {
 	/* add the memory region for the bootloader */
 	/* add memories for FLASH and SRAM */
-	BOOTLOADER(rwx) :	ORIGIN = 0x20041f00, LENGTH = 256B
+	BOOTLOADER(rwx) :	ORIGIN = 0x20041f00, LENGTH = 256
 	SRAM(rwx) :             ORIGIN = 0x20000000, LENGTH = 264K
 	FLASH(rx) :             ORIGIN = 0x10000000, LENGTH = 2M
 }
@@ -39,14 +39,14 @@ SECTIONS {
 	 * external tool to put a checksum in here */
 	__bl2_checksum = LOADADDR(.bootloader) + LENGTH(BOOTLOADER) - 4;
 
-	/* TODO: add .vector_table section and its contents to FLASH */
+	/* add .vector_table section and its contents to FLASH */
 	.vectors : {
 		/* add contents of the vector table, ensure that linker garbage
 		 * collection does not eat it away */
 		KEEP(*(.vector_table))
 	} > FLASH
 
-	/* TODO: complete the .text section */
+	/* complete the .text section */
 	.text : {
 		/* add the contents of the .text section */
 		*(.text)            
