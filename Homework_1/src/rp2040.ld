@@ -3,18 +3,20 @@
  * https://sourceware.org/binutils/docs/ld/Scripts.html
  */
 
-/* TODO: set the output architecture to arm using OUTPUT_ARCH */
+/* set the output architecture to arm using OUTPUT_ARCH */
 
-/* TODO: set the output format using OUTPUT_FORMAT */
-
-/* TODO: set the entry point to __reset using ENTRY */
-
+OUTPUT_ARCH(arm)
+/* set the output format using OUTPUT_FORMAT */
+OUTPUT_FORMAT("elf32-little")
+/* set the entry point to __reset using ENTRY */
+ENTRY(__reset)
 /* memories */
 MEMORY {
 	/* add the memory region for the bootloader */
-	/* TODO: complete */
-	BOOTLOADER(rwx) :	ORIGIN = ????, LENGTH = ????
-	/* TODO: add memories for FLASH and SRAM */
+	/* add memories for FLASH and SRAM */
+	BOOTLOADER(rwx) :	ORIGIN = 0x20041f00, LENGTH = 256B
+	SRAM(rwx) :             ORIGIN = 0x20000000, LENGTH = 264K
+	FLASH(rx) :             ORIGIN = 0x10000000, LENGTH = 2M
 }
 
 /* sections */
@@ -24,11 +26,12 @@ SECTIONS {
 		/* there will be no references to symbols in this section outside of
 		 * it, ensure the linker does not garbage collect us; use KEEP to have
 		 * it keep everything it puts here */
-		/* TODO: complete, add the contents of the bootloader ssection */
-		KEEP(????)
+		/* complete, add the contents of the bootloader ssection */
+		
+		KEEP(*(.bootloader))
 		/* ensure that the end of the section is 256 byte aligned */
-		. = ALIGN(256)
-	} > BOOTLOADER AT > FLASH
+		. = ALIGN(256);
+	} > BOOTLOADER AT> FLASH
 	/* the above mirrors a copy in flash */
 
 	/* provide the symbol __bl2_checksum to be at the end of the load address
@@ -38,36 +41,65 @@ SECTIONS {
 
 	/* TODO: add .vector_table section and its contents to FLASH */
 	.vectors : {
-		/* TODO: add contents of the vector table, ensure that linker garbage
+		/* add contents of the vector table, ensure that linker garbage
 		 * collection does not eat it away */
-	} > ????
+		KEEP(*(.vector_table))
+	} > FLASH
 
 	/* TODO: complete the .text section */
 	.text : {
-		/* TODO: add the contents of the .text section */
+		/* add the contents of the .text section */
+		*(.text)            
+		*(.text.*)
 		/* provide a hidden symbol to mark the end of the .text section */
 		PROVIDE_HIDDEN(__text_end = .);
-	} > ????
-	/* TODO: above, put it in FLASH */
+	} > FLASH
+	/* above, put it in FLASH */
+	
+	.rodata : {
+	
+	/* add contents of .rodata section*/
+	*(.rodata)
+	*(.rodata.*)
+	
+	} > FLASH
+	/* place .rodata in FLASH */
 
-	/* TODO: place .rodata in FLASH */
-
-	/* TODO: complete the .data section */
+	/* complete the .data section */
 	.data : {
 		/* ensure the start is 4 byte (word) aligned */
 		. = ALIGN(4);
-		/* TODO: provide __data_start to point here */
-		/* TODO: add the contents of the data section */
-		/* TODO: ensure word alignment and provide a symbol for __data_end */
-	} > ????
-	/* TODO: above, put it in SRAM, don't forget to mirror to FLASH */
+		/* provide __data_start to point here */
+		PROVIDE(__data_start = .);
+		/* add the contents of the data section */
+		*(.data)
+		*(.data.*)
 
-	/* TODO: provide symbol for __data_load_start located at the address in
+		/*ensure word alignment and provide a symbol for __data_end */
+		PROVIDE(__data_end = .);
+		. = ALIGN(4);
+	} > SRAM AT > FLASH
+	/* above, put it in SRAM, don't forget to mirror to FLASH */
+
+	/* provide symbol for __data_load_start located at the address in
 	 * FLASH where the initializataion data is found */
-
-	/* TODO: add the .bss section with the required symbols; ensure alignment
+	
+	PROVIDE(__data_load_start = LOADADDR(.data));
+	
+	/* add the .bss section with the required symbols; ensure alignment
 	 * as well as placement in SRAM */
+	.bss : {
+		. = ALIGN(4);
+	
+		PROVIDE(__bss_start = .);
+		*(.bss)
+		*(.bss.*)
+		
+		PROVIDE(__bss_end = .);
+		. = ALIGN(4);
+		} > SRAM
 
-	/* TODO: provide a symbol for __ram_end which points to the end of the SRAM
+	/* provide a symbol for __ram_end which points to the end of the SRAM
 	 * memory */
+	PROVIDE(__ram_end = .);
 }
