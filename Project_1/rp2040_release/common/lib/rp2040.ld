@@ -1,0 +1,12 @@
+OUTPUT_ARCH(arm)
+
+MEMORY {
+	BOOTLOADER(rx) : ORIGIN = 0x20041f00, LENGTH = 256
+	FLASH(rx) : ORIGIN = 0x10000000, LENGTH = (4*1024*1024)
+	SRAM(rwx) : ORIGIN = 0x20000000, LENGTH = 264K
+}
+
+
+SECTIONS {
+	ASSERT(false, "Replace this file with your rp2040.ld");
+}
