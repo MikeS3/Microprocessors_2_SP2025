@@ -4,9 +4,9 @@
 extern struct {
 /* 000 */	volatile unsigned uartdr;
 /* 004 */	volatile unsigned uartrsr;
-/* 000 */	unsigned __padding_1[0x14/4]; /* padding of 0x14 */
+/* 000 */	unsigned __padding_1[0x14/4 - 1];	/* padding of 0x14 */
 /* 018 */	volatile unsigned uartfr;
-/* 000 */	unsigned __padding_2[2];	/* padding of 8 */
+/* 000 */	unsigned __padding_2[1];			/* padding of 4 */
 /* 020 */	volatile unsigned uartilpr;
 /* 024 */	volatile unsigned uartibrd;
 /* 028 */	volatile unsigned uartfbrd;
@@ -19,5 +19,24 @@ extern struct {
 /* 044 */	volatile unsigned uarticr;
 /* 048 */	volatile unsigned uartdmacr;
 } UART0, UART1;
+
+#define UART_WLEN_8		(0x3)
+#define UART_WLEN_7		(0x2)
+#define UART_WLEN_6		(0x1)
+#define UART_WLEN_5		(0x0)
+#define UART_LCR_H_WLEN_OFFSET	(5)
+#define UART_LCR_H_WLEN_MASK		((0x3) << (5))
+#define UART_LCR_H_FEN	(4)
+
+#define UART_FR_BUSY	(3)
+#define UART_FR_TXFF	(5)
+
+
+#define UART_CR_UARTEN		(0)
+#define UART_CR_TXE			(8)
+#define UART_CR_RXE			(9)
+
+#define UART_IMSC_TXIM		(5)
+#define UART_IMSC_RXIM		(4)
 
 #endif
