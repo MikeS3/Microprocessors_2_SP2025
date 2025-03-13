@@ -1,4 +1,4 @@
-	.section .vector_table
+	.section .vector_table, "a"
 __vector_table:
 	/* Section B1.5.2 of the ARMv6-M Architecture Reference Manual */
 	.word	__ram_end /* loaded into msp by the bootloader */

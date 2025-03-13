@@ -13,28 +13,32 @@ __reset:
 	ldr r2, =__data_load_start
 
 
-L_init_data:
+.L_init_data:
+1:
 	cmp r0, r1
-	beq L_init_bss
+	beq 1f
 	ldr r3, [r2]
 	adds r2, #4 // increment r2 by 4 bytes
 	str r3, [r0] //store value at r3 into address at r0
 	adds r0, #4 // increment r0 by 4 bytes
-	b L_init_data
-L_init_bss_pointers:
+	b 1b
+1:
+.L_init_bss_pointers:
 	/* load pointers for .bss initialization */
 	ldr r1, = __bss_start
 	ldr r2, = __bss_end
 	movs r0, #0
 
-L_init_bss:
+.L_init_bss:
+1:
 	/* loop to clear the section */
 	cmp r1, r2
-	beq L_call_main
+	beq 1f
 	str r0, [r1] // store 0 into sram at address stored at r1
 	adds r1, #4 // increment r1 by 4 bytes
-	b L_init_bss
-L_call_main:
+	b 1b
+.L_call_main:
+1:
 	bl main		/* call main */
 
 	/* gracefully halt execution waiting for event */

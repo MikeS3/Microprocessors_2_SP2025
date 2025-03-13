@@ -7,7 +7,7 @@ int main(void) {
 	RESETS.reset &= ~(1u << RESETS_reset_io_bank0);	/* deassert reset bit */
 	/* wait until the reset is done */
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_reset_done_io_bank0);
-
+	
 	/* set GPIO25 (LED_PIN) to use the SIO function */
 	IO_BANK0.io[LED_PIN].ctrl = 5;			/* SIO driver for IO[LED_PIN] */
 
