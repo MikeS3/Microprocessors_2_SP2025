@@ -10,6 +10,6 @@ extern struct {
 /* RESETS */
 #define RESETS_reset_io_bank0		(5)
 #define RESETS_reset_done_io_bank0	(5)
-#define RESETS_plls_sys			(12)
+#define RESETS_pll_sys			(12)
 
 #endif	/* RESETS_H__ */
