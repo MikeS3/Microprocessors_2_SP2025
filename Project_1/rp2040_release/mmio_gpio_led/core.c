@@ -56,29 +56,29 @@ int main(void) {
 
 	/* enable the system PLL (150 MHz) */
 
-	PLL_SYS.cs = 1;		/* program the reference clock divider */
+	/*PLL_SYS.cs = 1;		 program the reference clock divider
 
-	PLL_SYS.fbdiv_int = 125;	/* then the feedback divider */
+	PLL_SYS.fbdiv_int = 125;	/* then the feedback divider 
 
 	PLL_SYS.pwr &= ~(
 
-				(1u << PLL_pwr_pd)		/* turn on main power */
+				(1u << PLL_pwr_pd)		/* turn on main power 
 
-			|	(1u << PLL_pwr_vcopd));	/* and VCO */
+			|	(1u << PLL_pwr_vcopd));	/* and VCO 
 
-	loop_until_bit_is_set(PLL_SYS.cs, PLL_lock);	/* wait for VCO lock */
-
-
+	loop_until_bit_is_set(PLL_SYS.cs, PLL_lock);	/* wait for VCO lock 
 
 
 
-	PLL_SYS.prim =						/* set up postdividers */
+
+
+	PLL_SYS.prim =						/* set up postdividers 
 
 					(5 << PLL_postdiv1_offset)
 
 				|	(2 << PLL_postdiv2_offset);
 
-	PLL_SYS.pwr &= ~(1u << PLL_pwr_postdivpd);	/* turn the postdividers */
+	PLL_SYS.pwr &= ~(1u << PLL_pwr_postdivpd);*/	/* turn the postdividers */
 
 
 
@@ -88,7 +88,7 @@ int main(void) {
 
 					(1u << CLOCKS_enable)
 
-				|	(CLOCKS_GPOUT_clksrc_pll_sys);
+				|	(CLOCKS_GPOUT_xosc_clksrc);
 
 
 

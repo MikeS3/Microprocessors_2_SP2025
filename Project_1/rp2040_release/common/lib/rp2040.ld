@@ -101,5 +101,5 @@ SECTIONS {
 
 	/* provide a symbol for __ram_end which points to the end of the SRAM
 	 * memory */
-	PROVIDE(__ram_end = .);
+	PROVIDE(__ram_end = ORIGIN(SRAM) + LENGTH(SRAM));
 }
