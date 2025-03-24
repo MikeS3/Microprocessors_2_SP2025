@@ -14,7 +14,7 @@
 
 /* use the first user constructor to set up resets */
 
-__attribute__((constructor(101)))
+//__attribute__((constructor(101))
 
 void do_unresets(void) {
 
@@ -24,6 +24,7 @@ void do_unresets(void) {
 
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_reset_io_bank0);
 
+	/*lift UART0 out of reset*/
 
 
 	/* lift system PLL out of reset */
@@ -38,12 +39,8 @@ void do_unresets(void) {
 
 int main(void) {
 
-	/* uncomment the following if extra credit for the first two homeworks was
-
-	 * not done */
 
 	do_unresets();
-
 
 
 	/* enable the oscillator */
@@ -59,7 +56,6 @@ int main(void) {
 	/*PLL_SYS.cs = 1;		 program the reference clock divider
 
 	PLL_SYS.fbdiv_int = 125;	/* then the feedback divider 
-
 	PLL_SYS.pwr &= ~(
 
 				(1u << PLL_pwr_pd)		/* turn on main power 
