@@ -137,7 +137,7 @@ class uart_tx(gdb.Command):
 
 		try:
 			value = next(self.__image)
-			self.__send([int(value)])
+			self.__send([value])
 		except StopIteration:
 			gdb.write(f'nothing to send\n')
 

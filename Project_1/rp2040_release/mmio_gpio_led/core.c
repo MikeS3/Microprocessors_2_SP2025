@@ -5,63 +5,30 @@
 #include <ioregs.h>
 
 #include <resets.h>
+#include "uart0.h"
 
-
-void do_unresets(void) {
-
-	/* lift IO_BANK0 out of reset */
-
-	RESETS.reset &= ~(1u << RESETS_reset_io_bank0);
-
-	loop_until_bit_is_set(RESETS.reset_done, RESETS_reset_io_bank0);
-
-	/*lift UART0 out of reset*/
-
-	RESETS.reset &= ~(1u << RESETS_uart0);
-
-        loop_until_bit_is_set(RESETS.reset_done, RESETS_uart0);
-
-	/*lift SPI0 out of reset*/
-
-        RESETS.reset &= ~(1u << RESETS_spi0);
-
-        loop_until_bit_is_set(RESETS.reset_done, RESETS_spi0);
-
-
-	/* lift system PLL out of reset */
-
-	RESETS.reset &= ~(1u << RESETS_pll_sys);
-
-	loop_until_bit_is_set(RESETS.reset_done, RESETS_pll_sys);
-
-}
+#include <uart-baud.h>
+#include <uart.h>
+#include "llinit.c"
 
 
 
 int main(void) {
 
-
-
-	do_unresets();
-
-	/* enable the external oscillator */
-
-	XOSC.ctrl = XOSC_enable | XOSC_freq_range_1_15MHz;
-
-	loop_until_bit_is_set(XOSC.status, XOSC_stable);
-
-
-	//Enable Peripheral Clock and set to XOSC
-	CLOCKS.clk_peri_ctrl = (1u << CLOCKS_enable) | (CLOCKS_PERI_xosc_clksrc);
+	low_level_init();
 
 	//Configure UART0 for GP0 TX GP1 RX
-	IO_BANK0.io[0] = 2;
-	IO_BANK0.io[1] = 2;
+	IO_BANK0.io[0].ctrl = 2;
+	IO_BANK0.io[1].ctrl = 2;
+
+	//INITIALIZE UART AND SEND MESSAGE
+	uart0_init();
+
 
 	//Configure SPI0 for GP6 SCK GP7 TX GP5 CS
-	IO_BANK0.io[5] = 1;
-        IO_BANK0.io[6] = 1;
-	IO_BANK0.io[7] = 1;
+	IO_BANK0.io[5].ctrl = 1;
+    IO_BANK0.io[6].ctrl = 1;
+	IO_BANK0.io[7].ctrl = 1;
 
 	return 0;
 

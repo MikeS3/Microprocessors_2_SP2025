@@ -62,6 +62,7 @@ SECTIONS {
 	*(.rodata)
 	*(.rodata.*)
 	
+		. = ALIGN(4);
 	} > FLASH
 	/* place .rodata in FLASH */
 
