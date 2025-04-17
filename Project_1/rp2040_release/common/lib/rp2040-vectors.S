@@ -25,7 +25,6 @@ __vector_table:
 	.word __vector_12	/* core vector 12, SVCall */
 	/* TODO: fill in missing 13 to 15 */
 
-	.word __bad_interrupt
 	/* TODO: add external vectors 16 to 47 */
 	/* HINT: use .altmacro, .macro, and .rept to ease your workload */
 	.word __vector_13
