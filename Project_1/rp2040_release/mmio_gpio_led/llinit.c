@@ -10,11 +10,7 @@
 #include <resets.h>
 #include "uart0.h"
 
-#ifndef F_PERIPH
-#define F_PERIPH  12000000ULL // 12MHz periipheral clock
-#endif
-#define BAUD 115200U
-#include <uart-baud.h>
+
 #include <uart.h>
 
 void start_unresets(void) {

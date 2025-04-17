@@ -9,7 +9,7 @@
 
 #include <uart-baud.h>
 #include <uart.h>
-#include "llinit.c"
+#include "llinit.h"
 
 
 

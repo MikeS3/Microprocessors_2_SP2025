@@ -1,6 +1,9 @@
 
 Discarded input sections
 
+ .text          0x00000000        0x0 llinit.o
+ .data          0x00000000        0x0 llinit.o
+ .bss           0x00000000        0x0 llinit.o
  .text          0x00000000        0x0 core.o
  .data          0x00000000        0x0 core.o
  .bss           0x00000000        0x0 core.o
@@ -43,16 +46,16 @@ Linker script and memory map
  *(.text)
  *(.text.*)
  .text.start_unresets
-                0x100001c4       0x34 core.o
+                0x100001c4       0x34 llinit.o
                 0x100001c4                start_unresets
  .text.finish_unresets
-                0x100001f8       0x30 core.o
+                0x100001f8       0x30 llinit.o
                 0x100001f8                finish_unresets
  .text.clocks_init
-                0x10000228       0x24 core.o
+                0x10000228       0x24 llinit.o
                 0x10000228                clocks_init
  .text.low_level_init
-                0x1000024c       0x10 core.o
+                0x1000024c       0x10 llinit.o
                 0x1000024c                low_level_init
  .text.startup.main
                 0x1000025c       0x24 core.o
@@ -128,7 +131,7 @@ Linker script and memory map
  .v4_bx         0x10000350        0x0 linker stubs
 
 .iplt           0x10000350        0x0
- .iplt          0x10000350        0x0 core.o
+ .iplt          0x10000350        0x0 llinit.o
 
 .rodata         0x10000350       0x10
  *(.rodata)
@@ -139,7 +142,7 @@ Linker script and memory map
  *fill*         0x1000035e        0x2 
 
 .rel.dyn        0x10000360        0x0
- .rel.iplt      0x10000360        0x0 core.o
+ .rel.iplt      0x10000360        0x0 llinit.o
 
 .data           0x20000000        0x4 load address 0x10000360
                 0x20000000                        . = ALIGN (0x4)
@@ -152,7 +155,7 @@ Linker script and memory map
                 0x10000360                        PROVIDE (__data_load_start = LOADADDR (.data))
 
 .igot.plt       0x20000004        0x0 load address 0x10000364
- .igot.plt      0x20000004        0x0 core.o
+ .igot.plt      0x20000004        0x0 llinit.o
 
 .bss            0x20000004        0x0 load address 0x10000364
                 0x20000004                        . = ALIGN (0x4)
@@ -174,6 +177,7 @@ Linker script and memory map
                 [!provide]                        PROVIDE (UART1 = 0x40038000)
                 0xe0000000                        PROVIDE (PPB = 0xe0000000)
                 0xe000e100                        PROVIDE (NVIC_ISER = (PPB + 0xe100))
+LOAD llinit.o
 LOAD core.o
 LOAD uart0.o
 LOAD ../common/lib/rp2040-vectors.o
@@ -182,65 +186,77 @@ LOAD ../common/lib/bl2.o
 OUTPUT(binary.elf elf32-littlearm)
 LOAD linker stubs
 
-.debug_info     0x00000000      0x792
- .debug_info    0x00000000      0x4c0 core.o
- .debug_info    0x000004c0      0x2a2 uart0.o
- .debug_info    0x00000762       0x30 ../common/lib/rp2040-crt.o
+.debug_info     0x00000000      0x80f
+ .debug_info    0x00000000      0x410 llinit.o
+ .debug_info    0x00000410      0x12d core.o
+ .debug_info    0x0000053d      0x2a2 uart0.o
+ .debug_info    0x000007df       0x30 ../common/lib/rp2040-crt.o
 
-.debug_abbrev   0x00000000      0x218
- .debug_abbrev  0x00000000      0x106 core.o
- .debug_abbrev  0x00000106       0xec uart0.o
- .debug_abbrev  0x000001f2       0x26 ../common/lib/rp2040-crt.o
+.debug_abbrev   0x00000000      0x286
+ .debug_abbrev  0x00000000       0xa5 llinit.o
+ .debug_abbrev  0x000000a5       0xcf core.o
+ .debug_abbrev  0x00000174       0xec uart0.o
+ .debug_abbrev  0x00000260       0x26 ../common/lib/rp2040-crt.o
 
-.debug_aranges  0x00000000       0x90
+.debug_aranges  0x00000000       0xa8
  .debug_aranges
-                0x00000000       0x40 core.o
+                0x00000000       0x38 llinit.o
  .debug_aranges
-                0x00000040       0x28 uart0.o
+                0x00000038       0x20 core.o
  .debug_aranges
-                0x00000068       0x28 ../common/lib/rp2040-crt.o
+                0x00000058       0x28 uart0.o
+ .debug_aranges
+                0x00000080       0x28 ../common/lib/rp2040-crt.o
 
 .debug_rnglists
-                0x00000000       0x5d
+                0x00000000       0x6a
  .debug_rnglists
-                0x00000000       0x2b core.o
+                0x00000000       0x25 llinit.o
  .debug_rnglists
-                0x0000002b       0x19 uart0.o
+                0x00000025       0x13 core.o
  .debug_rnglists
-                0x00000044       0x19 ../common/lib/rp2040-crt.o
+                0x00000038       0x19 uart0.o
+ .debug_rnglists
+                0x00000051       0x19 ../common/lib/rp2040-crt.o
 
-.debug_line     0x00000000      0x39f
- .debug_line    0x00000000      0x1ec core.o
- .debug_line    0x000001ec      0x13d uart0.o
- .debug_line    0x00000329       0x76 ../common/lib/rp2040-crt.o
+.debug_line     0x00000000      0x3cc
+ .debug_line    0x00000000      0x16a llinit.o
+ .debug_line    0x0000016a       0xb5 core.o
+ .debug_line    0x0000021f      0x137 uart0.o
+ .debug_line    0x00000356       0x76 ../common/lib/rp2040-crt.o
 
-.debug_str      0x00000000      0x554
- .debug_str     0x00000000      0x554 core.o
-                                0x4be (size before relaxing)
- .debug_str     0x00000554      0x275 uart0.o
- .debug_str     0x00000554       0x8e ../common/lib/rp2040-crt.o
+.debug_str      0x00000000      0x55d
+ .debug_str     0x00000000      0x55d llinit.o
+                                0x4a7 (size before relaxing)
+ .debug_str     0x0000055d      0x1c0 core.o
+ .debug_str     0x0000055d      0x275 uart0.o
+ .debug_str     0x0000055d       0x8e ../common/lib/rp2040-crt.o
 
 .comment        0x00000000       0x1e
- .comment       0x00000000       0x1e core.o
+ .comment       0x00000000       0x1e llinit.o
                                  0x1f (size before relaxing)
+ .comment       0x0000001e       0x1f core.o
  .comment       0x0000001e       0x1f uart0.o
 
 .ARM.attributes
                 0x00000000       0x2a
  .ARM.attributes
-                0x00000000       0x2c core.o
+                0x00000000       0x2c llinit.o
  .ARM.attributes
-                0x0000002c       0x2c uart0.o
+                0x0000002c       0x2c core.o
  .ARM.attributes
-                0x00000058       0x1c ../common/lib/rp2040-vectors.o
+                0x00000058       0x2c uart0.o
  .ARM.attributes
-                0x00000074       0x22 ../common/lib/rp2040-crt.o
+                0x00000084       0x1c ../common/lib/rp2040-vectors.o
  .ARM.attributes
-                0x00000096       0x22 ../common/lib/bl2.o
+                0x000000a0       0x22 ../common/lib/rp2040-crt.o
+ .ARM.attributes
+                0x000000c2       0x22 ../common/lib/bl2.o
 
-.debug_frame    0x00000000       0xa0
- .debug_frame   0x00000000       0x70 core.o
- .debug_frame   0x00000070       0x30 uart0.o
+.debug_frame    0x00000000       0xb0
+ .debug_frame   0x00000000       0x58 llinit.o
+ .debug_frame   0x00000058       0x28 core.o
+ .debug_frame   0x00000080       0x30 uart0.o
 
 .debug_line_str
                 0x00000000       0x7a

@@ -62,8 +62,8 @@ void uart0_init(void) {
 				|	(1u << UART_CR_RXE)		/* enable reciever */
 				;
 
-	/* and the transmit interrupt */
-	UART0.uartimsc |= (1u << UART_IMSC_RXIM) | (1u << UART_IMSC_TXIM);
+	/* and the transmit and recieve interrupt */
+	UART0.uartimsc = (1u << UART_IMSC_RXIM) | (1u << UART_IMSC_TXIM);
 
-	NVIC_ISER = NVIC_BIT(UART0_vect);
+	NVIC_ISER = 1 << NVIC_BIT(UART0_vect);
 }
