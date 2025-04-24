@@ -13,19 +13,11 @@
 
 /* register the UART0 interrupt */
 ISR(UART0_vect) {
-	/* message to repeatedly send */
-	static const char* const msg = "hello world\r\n";
-	/* static storage class means this has permanent store and no external
-	 * linkage; since we explicitly initialize this, variable goes in .data */
-	static const char* p = msg;
-	/* get the character pointed to by p and put it on the transmit buffer;
-	 * then increment the pointer */
-	UART0.uartdr = *p++;
-	if(!*p) {
-		/* C strings end in a null terminator; if we are at the terminator then
-		 * set the pointer back to the start of the message */
-		p = msg;
-	}
+	/* Run checksum to make sure data is valid */
+
+	//Send Frame to Matrix
+	NVIC_ISPR;
+	//UART0.uartdr;
 }
 
 void uart0_init(void) {
@@ -58,12 +50,12 @@ void uart0_init(void) {
 
 	/* enable the UART */
 	UART0.uartcr =	(1u << UART_CR_UARTEN)	/* enable UART */
-				| 	(1u << UART_CR_TXE)		/* enable transmitter */
+				/*| 	(1u << UART_CR_TXE)*/		/* enable transmitter */
 				|	(1u << UART_CR_RXE)		/* enable reciever */
 				;
 
 	/* and the transmit and recieve interrupt */
-	UART0.uartimsc = (1u << UART_IMSC_RXIM) | (1u << UART_IMSC_TXIM);
+	UART0.uartimsc = (1u << UART_IMSC_RXIM); //| (1u << UART_IMSC_TXIM);
 
 	NVIC_ISER = 1 << NVIC_BIT(UART0_vect);
 }
