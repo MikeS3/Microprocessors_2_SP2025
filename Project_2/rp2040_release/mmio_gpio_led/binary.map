@@ -1,0 +1,222 @@
+
+Discarded input sections
+
+ .text          0x00000000        0x0 llinit.o
+ .data          0x00000000        0x0 llinit.o
+ .bss           0x00000000        0x0 llinit.o
+ .text          0x00000000        0x0 core.o
+ .data          0x00000000        0x0 core.o
+ .bss           0x00000000        0x0 core.o
+ .text          0x00000000        0x0 uart0.o
+ .data          0x00000000        0x0 uart0.o
+ .bss           0x00000000        0x0 uart0.o
+ .text.uart0_init
+                0x00000000       0x64 uart0.o
+ .text          0x00000000        0x0 spi0.o
+ .data          0x00000000        0x0 spi0.o
+ .bss           0x00000000        0x0 spi0.o
+ .text.spi0_init
+                0x00000000       0x4c spi0.o
+ .text          0x00000000        0x0 ../common/lib/rp2040-vectors.o
+ .data          0x00000000        0x0 ../common/lib/rp2040-vectors.o
+ .bss           0x00000000        0x0 ../common/lib/rp2040-vectors.o
+ .text          0x00000000        0x0 ../common/lib/rp2040-crt.o
+ .data          0x00000000        0x0 ../common/lib/rp2040-crt.o
+ .bss           0x00000000        0x0 ../common/lib/rp2040-crt.o
+ .vectors       0x00000000        0x0 ../common/lib/rp2040-crt.o
+ .text          0x00000000        0x0 ../common/lib/bl2.o
+ .data          0x00000000        0x0 ../common/lib/bl2.o
+ .bss           0x00000000        0x0 ../common/lib/bl2.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+BOOTLOADER       0x20041f00         0x00000100         xrw
+SRAM             0x20000000         0x00042000         xrw
+FLASH            0x10000000         0x00200000         xr
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.bootloader     0x20041f00      0x100 load address 0x10000000
+ *(.bootloader)
+ .bootloader    0x20041f00      0x100 ../common/lib/bl2.o
+                0x20042000                        . = ALIGN (0x100)
+                0x100000fc                        __bl2_checksum = ((LOADADDR (.bootloader) + LENGTH (BOOTLOADER)) - 0x4)
+
+.vectors        0x10000100       0xc0
+ *(.vector_table)
+ .vector_table  0x10000100       0xc0 ../common/lib/rp2040-vectors.o
+
+.text           0x100001c0      0x120
+ *(.text)
+ *(.text.*)
+ .text.start_unresets
+                0x100001c0       0x34 llinit.o
+                0x100001c0                start_unresets
+ .text.finish_unresets
+                0x100001f4       0x30 llinit.o
+                0x100001f4                finish_unresets
+ .text.clocks_init
+                0x10000224       0x24 llinit.o
+                0x10000224                clocks_init
+ .text.low_level_init
+                0x10000248       0x10 llinit.o
+                0x10000248                low_level_init
+ .text.startup.main
+                0x10000258       0x20 core.o
+                0x10000258                main
+ .text.__vector_36
+                0x10000278        0xc uart0.o
+                0x10000278                __vector_36
+ .text.__vector_34
+                0x10000284       0x18 spi0.o
+                0x10000284                __vector_34
+ .text.__reset  0x1000029c       0x40 ../common/lib/rp2040-crt.o
+                0x1000029c                __reset
+ .text.__bad_interrupt
+                0x100002dc        0x4 ../common/lib/rp2040-crt.o
+                0x100002dc                __vector_38
+                0x100002dc                __vector_22
+                0x100002dc                __vector_28
+                0x100002dc                __vector_32
+                0x100002dc                __vector_24
+                0x100002dc                __vector_12
+                0x100002dc                __vector_46
+                0x100002dc                __bad_interrupt
+                0x100002dc                __vector_6
+                0x100002dc                __vector_31
+                0x100002dc                __vector_35
+                0x100002dc                __vector_39
+                0x100002dc                __vector_3
+                0x100002dc                __vector_23
+                0x100002dc                __vector_30
+                0x100002dc                __vector_45
+                0x100002dc                __vector_25
+                0x100002dc                __vector_11
+                0x100002dc                __vector_13
+                0x100002dc                __vector_17
+                0x100002dc                __vector_19
+                0x100002dc                __vector_7
+                0x100002dc                __vector_41
+                0x100002dc                __vector_43
+                0x100002dc                __vector_27
+                0x100002dc                __vector_5
+                0x100002dc                __vector_33
+                0x100002dc                __vector_47
+                0x100002dc                __vector_37
+                0x100002dc                __vector_4
+                0x100002dc                __vector_44
+                0x100002dc                __vector_9
+                0x100002dc                __vector_2
+                0x100002dc                __vector_21
+                0x100002dc                __vector_15
+                0x100002dc                __vector_29
+                0x100002dc                __vector_40
+                0x100002dc                __vector_8
+                0x100002dc                __vector_26
+                0x100002dc                __vector_14
+                0x100002dc                __vector_10
+                0x100002dc                __vector_16
+                0x100002dc                __vector_18
+                0x100002dc                __vector_20
+                0x100002dc                __vector_42
+                [!provide]                        PROVIDE (__text_end = .)
+
+.glue_7         0x100002e0        0x0
+ .glue_7        0x100002e0        0x0 linker stubs
+
+.glue_7t        0x100002e0        0x0
+ .glue_7t       0x100002e0        0x0 linker stubs
+
+.vfp11_veneer   0x100002e0        0x0
+ .vfp11_veneer  0x100002e0        0x0 linker stubs
+
+.v4_bx          0x100002e0        0x0
+ .v4_bx         0x100002e0        0x0 linker stubs
+
+.iplt           0x100002e0        0x0
+ .iplt          0x100002e0        0x0 llinit.o
+
+.rodata         0x100002e0       0x10
+ *(.rodata)
+ *(.rodata.*)
+ .rodata.str1.1
+                0x100002e0        0xe spi0.o
+                0x100002f0                        . = ALIGN (0x4)
+ *fill*         0x100002ee        0x2 
+
+.rel.dyn        0x100002f0        0x0
+ .rel.iplt      0x100002f0        0x0 llinit.o
+
+.data           0x20000000        0x4 load address 0x100002f0
+                0x20000000                        . = ALIGN (0x4)
+                0x20000000                        PROVIDE (__data_start = .)
+ *(.data)
+ *(.data.*)
+ .data.p.0      0x20000000        0x4 spi0.o
+                0x20000004                        PROVIDE (__data_end = .)
+                0x20000004                        . = ALIGN (0x4)
+                0x100002f0                        PROVIDE (__data_load_start = LOADADDR (.data))
+
+.igot.plt       0x20000004        0x0 load address 0x100002f4
+ .igot.plt      0x20000004        0x0 llinit.o
+
+.bss            0x20000004        0x0 load address 0x100002f4
+                0x20000004                        . = ALIGN (0x4)
+                0x20000004                        PROVIDE (__bss_start = .)
+ *(.bss)
+ *(.bss.*)
+                0x20000004                        PROVIDE (__bss_end = .)
+                0x20000004                        . = ALIGN (0x4)
+                0x20042000                        PROVIDE (__ram_end = (ORIGIN (SRAM) + LENGTH (SRAM)))
+                [!provide]                        PROVIDE (SIO = 0xd0000000)
+                0x40008000                        PROVIDE (CLOCKS = 0x40008000)
+                0x40014000                        PROVIDE (IO_BANK0 = 0x40014000)
+                0x4000c000                        PROVIDE (RESETS = 0x4000c000)
+                [!provide]                        PROVIDE (PADS_BANK0 = 0x4001c000)
+                0x40024000                        PROVIDE (XOSC = 0x40024000)
+                [!provide]                        PROVIDE (PLL_SYS = 0x40028000)
+                [!provide]                        PROVIDE (PLL_USB = 0x4002c000)
+                0x40034000                        PROVIDE (UART0 = 0x40034000)
+                [!provide]                        PROVIDE (UART1 = 0x40038000)
+                0x4003c000                        PROVIDE (SPI0 = 0x4003c000)
+                [!provide]                        PROVIDE (SPI01 = 0x40040000)
+                0xe0000000                        PROVIDE (PPB = 0xe0000000)
+                0xe000e010                        PROVIDE (SYSTICK = (PPB + 0xe010))
+                0xe000e100                        PROVIDE (NVIC_ISER = (PPB + 0xe100))
+                [!provide]                        PROVIDE (NVIC_ISPR = (PPB + 0xe200))
+LOAD llinit.o
+LOAD core.o
+LOAD uart0.o
+LOAD spi0.o
+LOAD ../common/lib/rp2040-vectors.o
+LOAD ../common/lib/rp2040-crt.o
+LOAD ../common/lib/bl2.o
+OUTPUT(binary.elf elf32-littlearm)
+LOAD linker stubs
+
+.comment        0x00000000       0x26
+ .comment       0x00000000       0x26 llinit.o
+                                 0x27 (size before relaxing)
+ .comment       0x00000026       0x27 core.o
+ .comment       0x00000026       0x27 uart0.o
+ .comment       0x00000026       0x27 spi0.o
+
+.ARM.attributes
+                0x00000000       0x2a
+ .ARM.attributes
+                0x00000000       0x2c llinit.o
+ .ARM.attributes
+                0x0000002c       0x2c core.o
+ .ARM.attributes
+                0x00000058       0x2c uart0.o
+ .ARM.attributes
+                0x00000084       0x2c spi0.o
+ .ARM.attributes
+                0x000000b0       0x1c ../common/lib/rp2040-vectors.o
+ .ARM.attributes
+                0x000000cc       0x22 ../common/lib/rp2040-crt.o
+ .ARM.attributes
+                0x000000ee       0x22 ../common/lib/bl2.o
