@@ -15,14 +15,9 @@ ISR(SPI0_vect) {
 	/* get the character pointed to by p and put it on the transmit buffer;
 	 * then increment the pointer */
 	SPI0.sspdr = *p++;
-	if(!*p) {
-		/* C strings end in a null terminator; if we are at the terminator then
-		 * set the pointer back to the start of the message */
-		p = msg;
-	}
 }
 
-void SPI0_init(void) {
+void spi0_init(void) {
 
 	//Lift Spi out of reset
 	RESETS.reset &= ~(1u << RESETS_spi0);
@@ -35,9 +30,10 @@ void SPI0_init(void) {
 	IO_BANK0.io[7].ctrl = 1;
 
 	//Set up Device as Master
-	SPI0.sspcr0.SPI_CR0_SCR = (//SPI CLOCK << SPI_CR0_SCR_OFFSET);
-	SPI0.sspcr1.SPI_CR1_MS = 0;
-
+	//SPI0.sspcr0.SPI_CR0_SCR = (//SPI CLOCK << SPI_CR0_SCR_OFFSET);
+	//set the clock prescaler value
+	SPI0.sspcpsr = 10;
+	SPI0.sspcr0 | SPI_CR0_DSS_MASK; //Enable Data size of 16 bits
 
 	NVIC_ISER = 1 << NVIC_BIT(SPI0_vect);
 }

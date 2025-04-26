@@ -14,7 +14,7 @@ extern struct {
 /* 024 */	volatile unsigned sspdmacr;
 } SPI0, SPI1;
 
-#define SPI_CR1_MS          (2)
+#define SPI_CR0_DSS_MASK    (0xF)
 #define SPI_CR0_SCR_OFFSET  (8)
 #define SPI_CR0_SCR_MASK    ((0xFF)<<8)
 /*

@@ -3,26 +3,17 @@
 #include <ioregs.h>
 #include <resets.h>
 #include <uart.h>
-
-#include "clocking.h"
 #include "uart0.h"
-
-/* for BAUD computation later on */
-//#define BAUD 115200
-//#define F_PERIPH 12000000ULL
 
 /* register the UART0 interrupt */
 ISR(UART0_vect) {
 	/* Run checksum to make sure data is valid */
 
-	//Send Frame to Matrix
-	NVIC_ISPR;
-	//UART0.uartdr;
+	//Set SPI0_vect Pending
+	//NVIC_ISPR = 1 << NVIC_BIT(SPI0_vect);
 }
 
 void uart0_init(void) {
-	/* initialize clocks */
-	//clocking_init();
 
 	/* lift reset out of IO_BANK0 */
 	RESETS.reset &= ~(1u << RESETS_reset_io_bank0);
