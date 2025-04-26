@@ -4,17 +4,12 @@
 #include <resets.h>
 #include <spi.h>
 #include "spi0.h"
+#include "image.h"
 
 /* register the SPI0 interrupt */
 ISR(SPI0_vect) {
-	/* message to repeatedly send */
-	static const char* const msg = "hello world\r\n";
-	/* static storage class means this has permanent store and no external
-	 * linkage; since we explicitly initialize this, variable goes in .data */
-	static const char* p = msg;
-	/* get the character pointed to by p and put it on the transmit buffer;
-	 * then increment the pointer */
-	SPI0.sspdr = *p++;
+	SPI0.sspdr = img[0].index
+
 }
 
 void spi0_init(void) {
@@ -34,8 +29,6 @@ void spi0_init(void) {
 	//set the clock prescaler value
 	SPI0.sspcpsr = 10;
 	SPI0.sspcr0 |= SPI_CR0_DSS_16; //Enable Data size of 16 bits
-
-	NVIC_ISER = 1 << NVIC_BIT(SPI0_vect);
 }
 /*
 #define MAX7219_CMD(a, b)  (((a) << 8u) | (b))

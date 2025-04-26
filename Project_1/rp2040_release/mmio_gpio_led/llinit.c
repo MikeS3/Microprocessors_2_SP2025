@@ -9,8 +9,6 @@
 
 #include <resets.h>
 #include "uart0.h"
-
-
 #include <uart.h>
 
 void start_unresets(void) {

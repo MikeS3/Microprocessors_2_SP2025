@@ -8,6 +8,7 @@ extern struct {
     const unsigned calib;
 } SYSTICK;
 
-#define TICKINT_OFFSET		(1 << 1)
+#define TICKINT_OFFSET		(0x1 << 1)
+#define CLKSOURCE_OFFSET    (0x1 << 2)
 
 #endif

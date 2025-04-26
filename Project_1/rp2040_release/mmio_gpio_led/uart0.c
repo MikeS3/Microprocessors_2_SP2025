@@ -4,13 +4,14 @@
 #include <resets.h>
 #include <uart.h>
 #include "uart0.h"
+#include "image.h"
 
 /* register the UART0 interrupt */
 ISR(UART0_vect) {
 	static unsigned char checksum;
 	unsigned char byte = UART0.uartdr;
 	//UART state machine
-
+	//use switch statement with parsing each field
 	if(byte = 0x46) {
 		checksum = 0;
 	}
