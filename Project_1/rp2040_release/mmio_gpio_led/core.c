@@ -21,7 +21,7 @@ int main(void) {
 	//enable systick
 	SYSTICK.csr |= 1;
 	//enable systick interrupt:
-	SYST.csr |= TICKINT_OFFSET;
+	SYSTICK.csr |= TICKINT_OFFSET;
 
 	/*
 	const static unsigned max7219_init[] = {

@@ -7,11 +7,13 @@
 
 /* register the UART0 interrupt */
 ISR(UART0_vect) {
-	
+	static unsigned char checksum;
 	unsigned char byte = UART0.uartdr;
 	//UART state machine
 
-	if(byte = )
+	if(byte = 0x46) {
+		checksum = 0;
+	}
 	/* Run checksum to make sure data is valid */
 
 	//Set SPI0_vect Pending
