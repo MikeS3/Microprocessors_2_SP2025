@@ -50,15 +50,13 @@ void pio_init(void) {
 				(1u << PIO_SM_SHIFTCTRL_FJOIN_TX);
 
 	/* set autoshift behavior! */
-	/* changing it so each PIO output is 24 bits instead of 32, avoid dealing with rollover */
 	PIO0.sm[0].shiftctrl |=
-				(1u << PIO_SM_SHIFTCTRL_AUTOPULL)
-			|	(24u << 25); // shift up 24 bits
-
-	/* Need to change the direction of shift to be left */
-	PIO0.sm[0].shiftctrl &= ~(1u << 19);				
+				(1u << PIO_SM_SHIFTCTRL_AUTOPULL);
 
 	/* TODO: set clock divider for FSM0 */
+	PIO0.sm[0].clkdiv = (15 << 16); //1.25 at 10FSM would need about 8MHZ and 120/8 = 15
+
+
 
 	PIO0.ctrl = 0;
 	PIO0.ctrl = (PIO_CTRL_RESTART0);

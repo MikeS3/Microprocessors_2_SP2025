@@ -22,7 +22,7 @@ void start_unresets(void) {
 
 	/*lift UART0 out of reset*/
 
-	//RESETS.reset &= ~(1u << RESETS_uart0);
+	RESETS.reset &= ~(1u << RESETS_uart0);
 
 
 	/*lift SPI0 out of reset*/
