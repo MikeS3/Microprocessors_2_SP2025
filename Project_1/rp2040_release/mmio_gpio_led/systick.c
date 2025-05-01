@@ -13,9 +13,8 @@ if(img[0].index = img[0].size - 1) //at the end of the image
 }else
 {
     img[0].index++; // increment column
-
-    
 }
 NVIC_ISER = 1 << NVIC_BIT(SPI0_vect); //enable SPI interrupt
 NVIC_ISPR = 1 << NVIC_BIT(SPI0_vect); //enable interrupt pending register
+
 }

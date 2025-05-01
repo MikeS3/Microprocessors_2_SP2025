@@ -18,6 +18,8 @@ extern struct {
 #define SPI_CR0_DSS_16      (0xF)
 #define SPI_CR0_SCR_OFFSET  (8)
 #define SPI_CR0_SCR_MASK    ((0xFF)<<8)
+#define SPI_CR1_MS          (1 << 2)
+#define SPI_CR1_SSE         (1 << 1)
 /*
 #define UART_WLEN_7		(0x2)
 #define UART_WLEN_6		(0x1)

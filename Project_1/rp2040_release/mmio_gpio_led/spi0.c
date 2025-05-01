@@ -8,8 +8,9 @@
 
 /* register the SPI0 interrupt */
 ISR(SPI0_vect) {
-	SPI0.sspdr = img[0].index
-
+	//SPI0.sspdr = img[0].data[img[0].index];
+	spi0_send(img[0].data[img[0].index])
+	
 }
 
 void spi0_init(void) {
@@ -24,11 +25,19 @@ void spi0_init(void) {
 	IO_BANK0.io[6].ctrl = 1;
 	IO_BANK0.io[7].ctrl = 1;
 
-	//Set up Device as Master
 	//SPI0.sspcr0.SPI_CR0_SCR = (//SPI CLOCK << SPI_CR0_SCR_OFFSET);
 	//set the clock prescaler value
 	SPI0.sspcpsr = 10;
 	SPI0.sspcr0 |= SPI_CR0_DSS_16; //Enable Data size of 16 bits
+	SPI0.sspcr1 &= ~(SPI_CR1_MS); // set device as master
+	SPI0.sspcr1 |= SPI_CR1_SSE;
+}
+
+void spi0_send(unsigned short message){
+	//pull chip select high
+	//IO_BANK0.io[5].crtl |= (0x3 << 8);
+	//send data
+	SPI0.sspdr = message;
 }
 /*
 #define MAX7219_CMD(a, b)  (((a) << 8u) | (b))
