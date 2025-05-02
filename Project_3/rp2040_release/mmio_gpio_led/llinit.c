@@ -9,8 +9,6 @@
 
 #include <resets.h>
 #include "uart0.h"
-
-
 #include <uart.h>
 
 void start_unresets(void) {
@@ -27,30 +25,22 @@ void start_unresets(void) {
 
 	/*lift SPI0 out of reset*/
 
-    //RESETS.reset &= ~(1u << RESETS_spi0);
+    RESETS.reset &= ~(1u << RESETS_spi0);
 
 
 	/* lift system PLL out of reset */
 
 	RESETS.reset &= ~(1u << RESETS_pll_sys);
 
-	//lift pio out of reset
-	RESETS.reset &= ~(1 << RESETS_pio0);
-
-	//lift rtc out of reset
-	RESETS.reset &= ~(1 << RESETS_rtc);
-
-
 
 }
 void finish_unresets(void) {
 
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_reset_io_bank0);
-	//loop_until_bit_is_set(RESETS.reset_done, RESETS_uart0);
-	//loop_until_bit_is_set(RESETS.reset_done, RESETS_spi0);
+	loop_until_bit_is_set(RESETS.reset_done, RESETS_uart0);
+	loop_until_bit_is_set(RESETS.reset_done, RESETS_spi0);
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_pll_sys);
-	loop_until_bit_is_set(RESETS.reset_done, RESETS_pio0);
-	loop_until_bit_is_set(RESETS.reset_done, RESETS_rtc);
+
 
 }
 
@@ -61,8 +51,6 @@ void clocks_init(void)
 	loop_until_bit_is_set(XOSC.status, XOSC_stable);
 	//Enable Peripheral Clock and set to XOSC
 	CLOCKS.clk_peri_ctrl = (1u << CLOCKS_enable) | (CLOCKS_PERI_xosc_clksrc);
-
-
 
 }
 

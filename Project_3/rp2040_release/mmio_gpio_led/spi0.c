@@ -51,7 +51,7 @@ ISR(SPI0_vect) {
 	
 	//MAX7219_CMD(0x1, column_data);
 	spi0_send(((0x1) << 8u) | (column_data));
-	//NVIC_ICPR = 1 << NVIC_BIT(SPI0_vect); //clear interrupt pending register
+	NVIC_ICPR = 1 << NVIC_BIT(SPI0_vect); //clear interrupt pending register
 	}
 
 	//after 8 sent, clear ISER

@@ -51,7 +51,7 @@ int main(void) {
 	};
 	
 	for(unsigned i = 1; i < 9; i++) {
-		spi0_send(MAX7219_CMD(i, 0));
+		spi0_send(MAX7219_CMD(i, 0x1));
 	};
 	
 	spi0_send(MAX7219_CMD(0xc, 1));
