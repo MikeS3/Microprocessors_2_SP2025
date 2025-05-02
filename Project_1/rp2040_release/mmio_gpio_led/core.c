@@ -9,7 +9,6 @@
 #include <uart-baud.h>
 #include "llinit.h"
 
-#define MAX7219_CMD(a, b)  (((a) << 8u) | (b))
 #if 0
 static inline void delay(unsigned n) {
 	asm volatile (
@@ -37,7 +36,7 @@ int main(void) {
 	SYSTICK.csr |= 1;
 	
 
-	
+	#define MAX7219_CMD(a, b)  (((a) << 8u) | (b))
 	const static unsigned max7219_init[] = {
         MAX7219_CMD(0xc, 0),
         MAX7219_CMD(0xf, 0),
@@ -51,7 +50,7 @@ int main(void) {
 	};
 	
 	for(unsigned i = 1; i < 9; i++) {
-		spi0_send(MAX7219_CMD(i, 0x1));
+		spi0_send(MAX7219_CMD(i, 0));
 	};
 	
 	spi0_send(MAX7219_CMD(0xc, 1));
