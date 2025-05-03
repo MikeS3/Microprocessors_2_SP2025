@@ -11,6 +11,11 @@ extern struct {
     /* 0x14 */ volatile unsigned irq_setup_1;
     /* 0x18 */ volatile unsigned rtc_1;
     /* 0x1C */ volatile unsigned rtc_0;
+    /* 0x20 */ volatile unsigned intr;         
+    /* 0x24 */ volatile unsigned inte;         //Interrupt Enable
+    /* 0x28 */ volatile unsigned intf;         // Interrupt Force
+    /* 0x2c */ volatile unsigned ints;         // Interrupt status after masking & forcing
+
 } RTC;
 
 // --- CTRL Register bits ---
