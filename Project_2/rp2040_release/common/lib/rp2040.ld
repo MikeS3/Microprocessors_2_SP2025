@@ -96,8 +96,8 @@ SECTIONS {
 		*(.bss)
 		*(.bss.*)
 		
-		PROVIDE(__bss_end = .);
 		. = ALIGN(4);
+		PROVIDE(__bss_end = .);
 		} > SRAM
 
 	/* provide a symbol for __ram_end which points to the end of the SRAM
