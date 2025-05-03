@@ -51,7 +51,7 @@ Linker script and memory map
  *(.vector_table)
  .vector_table  0x10000100       0xc0 ../common/lib/rp2040-vectors.o
 
-.text           0x100001c0      0x38c
+.text           0x100001c0      0x378
  *(.text)
  *(.text.*)
  .text.start_unresets
@@ -82,87 +82,87 @@ Linker script and memory map
                 0x1000045c        0xc spi0.o
                 0x1000045c                spi0_send
  .text.__vector_34
-                0x10000468       0x68 spi0.o
+                0x10000468       0x54 spi0.o
                 0x10000468                __vector_34
  .text.__vector_15
-                0x100004d0       0x38 systick.o
-                0x100004d0                __vector_15
- .text.__reset  0x10000508       0x40 ../common/lib/rp2040-crt.o
-                0x10000508                __reset
+                0x100004bc       0x38 systick.o
+                0x100004bc                __vector_15
+ .text.__reset  0x100004f4       0x40 ../common/lib/rp2040-crt.o
+                0x100004f4                __reset
  .text.__bad_interrupt
-                0x10000548        0x4 ../common/lib/rp2040-crt.o
-                0x10000548                __vector_38
-                0x10000548                __vector_22
-                0x10000548                __vector_28
-                0x10000548                __vector_32
-                0x10000548                __vector_24
-                0x10000548                __vector_12
-                0x10000548                __vector_46
-                0x10000548                __bad_interrupt
-                0x10000548                __vector_6
-                0x10000548                __vector_31
-                0x10000548                __vector_35
-                0x10000548                __vector_39
-                0x10000548                __vector_3
-                0x10000548                __vector_23
-                0x10000548                __vector_30
-                0x10000548                __vector_45
-                0x10000548                __vector_25
-                0x10000548                __vector_11
-                0x10000548                __vector_13
-                0x10000548                __vector_17
-                0x10000548                __vector_19
-                0x10000548                __vector_7
-                0x10000548                __vector_41
-                0x10000548                __vector_43
-                0x10000548                __vector_27
-                0x10000548                __vector_5
-                0x10000548                __vector_33
-                0x10000548                __vector_47
-                0x10000548                __vector_37
-                0x10000548                __vector_4
-                0x10000548                __vector_44
-                0x10000548                __vector_9
-                0x10000548                __vector_2
-                0x10000548                __vector_21
-                0x10000548                __vector_29
-                0x10000548                __vector_40
-                0x10000548                __vector_8
-                0x10000548                __vector_26
-                0x10000548                __vector_14
-                0x10000548                __vector_10
-                0x10000548                __vector_16
-                0x10000548                __vector_18
-                0x10000548                __vector_20
-                0x10000548                __vector_42
+                0x10000534        0x4 ../common/lib/rp2040-crt.o
+                0x10000534                __vector_38
+                0x10000534                __vector_22
+                0x10000534                __vector_28
+                0x10000534                __vector_32
+                0x10000534                __vector_24
+                0x10000534                __vector_12
+                0x10000534                __vector_46
+                0x10000534                __bad_interrupt
+                0x10000534                __vector_6
+                0x10000534                __vector_31
+                0x10000534                __vector_35
+                0x10000534                __vector_39
+                0x10000534                __vector_3
+                0x10000534                __vector_23
+                0x10000534                __vector_30
+                0x10000534                __vector_45
+                0x10000534                __vector_25
+                0x10000534                __vector_11
+                0x10000534                __vector_13
+                0x10000534                __vector_17
+                0x10000534                __vector_19
+                0x10000534                __vector_7
+                0x10000534                __vector_41
+                0x10000534                __vector_43
+                0x10000534                __vector_27
+                0x10000534                __vector_5
+                0x10000534                __vector_33
+                0x10000534                __vector_47
+                0x10000534                __vector_37
+                0x10000534                __vector_4
+                0x10000534                __vector_44
+                0x10000534                __vector_9
+                0x10000534                __vector_2
+                0x10000534                __vector_21
+                0x10000534                __vector_29
+                0x10000534                __vector_40
+                0x10000534                __vector_8
+                0x10000534                __vector_26
+                0x10000534                __vector_14
+                0x10000534                __vector_10
+                0x10000534                __vector_16
+                0x10000534                __vector_18
+                0x10000534                __vector_20
+                0x10000534                __vector_42
                 [!provide]                        PROVIDE (__text_end = .)
 
-.glue_7         0x1000054c        0x0
- .glue_7        0x1000054c        0x0 linker stubs
+.glue_7         0x10000538        0x0
+ .glue_7        0x10000538        0x0 linker stubs
 
-.glue_7t        0x1000054c        0x0
- .glue_7t       0x1000054c        0x0 linker stubs
+.glue_7t        0x10000538        0x0
+ .glue_7t       0x10000538        0x0 linker stubs
 
-.vfp11_veneer   0x1000054c        0x0
- .vfp11_veneer  0x1000054c        0x0 linker stubs
+.vfp11_veneer   0x10000538        0x0
+ .vfp11_veneer  0x10000538        0x0 linker stubs
 
-.v4_bx          0x1000054c        0x0
- .v4_bx         0x1000054c        0x0 linker stubs
+.v4_bx          0x10000538        0x0
+ .v4_bx         0x10000538        0x0 linker stubs
 
-.iplt           0x1000054c        0x0
- .iplt          0x1000054c        0x0 llinit.o
+.iplt           0x10000538        0x0
+ .iplt          0x10000538        0x0 llinit.o
 
-.rodata         0x1000054c       0x14
+.rodata         0x10000538       0x14
  *(.rodata)
  *(.rodata.*)
  .rodata.max7219_init.0
-                0x1000054c       0x14 core.o
-                0x10000560                        . = ALIGN (0x4)
+                0x10000538       0x14 core.o
+                0x1000054c                        . = ALIGN (0x4)
 
-.rel.dyn        0x10000560        0x0
- .rel.iplt      0x10000560        0x0 llinit.o
+.rel.dyn        0x1000054c        0x0
+ .rel.iplt      0x1000054c        0x0 llinit.o
 
-.data           0x20000000      0x608 load address 0x10000560
+.data           0x20000000      0x608 load address 0x1000054c
                 0x20000000                        . = ALIGN (0x4)
                 0x20000000                        PROVIDE (__data_start = .)
  *(.data)
@@ -171,12 +171,12 @@ Linker script and memory map
                 0x20000000                img
                 0x20000608                        PROVIDE (__data_end = .)
                 0x20000608                        . = ALIGN (0x4)
-                0x10000560                        PROVIDE (__data_load_start = LOADADDR (.data))
+                0x1000054c                        PROVIDE (__data_load_start = LOADADDR (.data))
 
-.igot.plt       0x20000608        0x0 load address 0x10000b68
+.igot.plt       0x20000608        0x0 load address 0x10000b54
  .igot.plt      0x20000608        0x0 llinit.o
 
-.bss            0x20000608        0xc load address 0x10000b68
+.bss            0x20000608        0xc load address 0x10000b54
                 0x20000608                        . = ALIGN (0x4)
                 0x20000608                        PROVIDE (__bss_start = .)
  *(.bss)
@@ -190,9 +190,9 @@ Linker script and memory map
  .bss.current_image
                 0x20000610        0x1 image.o
                 0x20000610                current_image
-                0x20000611                        PROVIDE (__bss_end = .)
                 0x20000614                        . = ALIGN (0x4)
  *fill*         0x20000611        0x3 
+                0x20000614                        PROVIDE (__bss_end = .)
                 0x20042000                        PROVIDE (__ram_end = (ORIGIN (SRAM) + LENGTH (SRAM)))
                 [!provide]                        PROVIDE (SIO = 0xd0000000)
                 0x40008000                        PROVIDE (CLOCKS = 0x40008000)
@@ -209,9 +209,9 @@ Linker script and memory map
                 0xe0000000                        PROVIDE (PPB = 0xe0000000)
                 0xe000e010                        PROVIDE (SYSTICK = (PPB + 0xe010))
                 0xe000e100                        PROVIDE (NVIC_ISER = (PPB + 0xe100))
-                0xe000e180                        PROVIDE (NVIC_ICER = (PPB + 0xe180))
+                [!provide]                        PROVIDE (NVIC_ICER = (PPB + 0xe180))
                 0xe000e200                        PROVIDE (NVIC_ISPR = (PPB + 0xe200))
-                0xe000e280                        PROVIDE (NVIC_ICPR = (PPB + 0xe280))
+                [!provide]                        PROVIDE (NVIC_ICPR = (PPB + 0xe280))
 LOAD llinit.o
 LOAD core.o
 LOAD uart0.o
@@ -224,14 +224,14 @@ LOAD ../common/lib/bl2.o
 OUTPUT(binary.elf elf32-littlearm)
 LOAD linker stubs
 
-.debug_info     0x00000000      0xdd2
+.debug_info     0x00000000      0xdba
  .debug_info    0x00000000      0x410 llinit.o
  .debug_info    0x00000410      0x1a6 core.o
  .debug_info    0x000005b6      0x33e uart0.o
- .debug_info    0x000008f4      0x2df spi0.o
- .debug_info    0x00000bd3       0xf6 systick.o
- .debug_info    0x00000cc9       0xd9 image.o
- .debug_info    0x00000da2       0x30 ../common/lib/rp2040-crt.o
+ .debug_info    0x000008f4      0x2c7 spi0.o
+ .debug_info    0x00000bbb       0xf6 systick.o
+ .debug_info    0x00000cb1       0xd9 image.o
+ .debug_info    0x00000d8a       0x30 ../common/lib/rp2040-crt.o
 
 .debug_abbrev   0x00000000      0x661
  .debug_abbrev  0x00000000       0xa5 llinit.o
@@ -273,24 +273,24 @@ LOAD linker stubs
  .debug_rnglists
                 0x000000b1       0x19 ../common/lib/rp2040-crt.o
 
-.debug_line     0x00000000      0x7ab
+.debug_line     0x00000000      0x783
  .debug_line    0x00000000      0x16a llinit.o
- .debug_line    0x0000016a      0x11a core.o
- .debug_line    0x00000284      0x238 uart0.o
- .debug_line    0x000004bc      0x1be spi0.o
- .debug_line    0x0000067a       0x88 systick.o
- .debug_line    0x00000702       0x33 image.o
- .debug_line    0x00000735       0x76 ../common/lib/rp2040-crt.o
+ .debug_line    0x0000016a      0x115 core.o
+ .debug_line    0x0000027f      0x238 uart0.o
+ .debug_line    0x000004b7      0x19b spi0.o
+ .debug_line    0x00000652       0x88 systick.o
+ .debug_line    0x000006da       0x33 image.o
+ .debug_line    0x0000070d       0x76 ../common/lib/rp2040-crt.o
 
-.debug_str      0x00000000      0x6a6
- .debug_str     0x00000000      0x6a6 llinit.o
+.debug_str      0x00000000      0x692
+ .debug_str     0x00000000      0x692 llinit.o
                                 0x4a7 (size before relaxing)
- .debug_str     0x000006a6      0x1d5 core.o
- .debug_str     0x000006a6      0x2d3 uart0.o
- .debug_str     0x000006a6      0x248 spi0.o
- .debug_str     0x000006a6      0x187 systick.o
- .debug_str     0x000006a6      0x165 image.o
- .debug_str     0x000006a6       0x8e ../common/lib/rp2040-crt.o
+ .debug_str     0x00000692      0x1d5 core.o
+ .debug_str     0x00000692      0x2d3 uart0.o
+ .debug_str     0x00000692      0x234 spi0.o
+ .debug_str     0x00000692      0x187 systick.o
+ .debug_str     0x00000692      0x165 image.o
+ .debug_str     0x00000692       0x8e ../common/lib/rp2040-crt.o
 
 .comment        0x00000000       0x1e
  .comment       0x00000000       0x1e llinit.o
