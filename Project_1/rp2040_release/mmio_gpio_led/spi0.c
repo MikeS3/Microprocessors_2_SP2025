@@ -55,7 +55,7 @@ ISR(SPI0_vect) {
 	}
 
 	//after 8 sent, clear ISER
-	NVIC_ICER = 1 << NVIC_BIT(SPI0_vect); //clear interrupt pending register
+	//NVIC_ICER = 1 << NVIC_BIT(SPI0_vect); //clear interrupt pending register
 
 	//ISCR clear
 	//after 8 sent, clear ICPR

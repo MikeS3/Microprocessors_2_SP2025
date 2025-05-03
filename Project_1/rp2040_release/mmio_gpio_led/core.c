@@ -9,7 +9,7 @@
 #include <uart-baud.h>
 #include "llinit.h"
 
-#if 0
+#if 1
 static inline void delay(unsigned n) {
 	asm volatile (
 		"1:	sub %[r0], #1"	"\n"
@@ -28,10 +28,14 @@ int main(void) {
 	spi0_init();
 
 
-	//enable systick interrupt:
-	SYSTICK.csr = (1 << TICKINT_OFFSET) | (1 << CLKSOURCE_OFFSET);
-	//set SYSTICK upper bound to 1_200_000 for 100ms on 12MHz clock
-	SYSTICK.rvr = 1200000;
+	//set SYSTICK upper bound to 12_500_000 for 100ms on 125MHz clock
+	SYSTICK.rvr = 12500000;
+
+	SYSTICK.cvr = 0;
+
+	//enable processor clock as systick clock and interrupts when systick reaches 0
+	SYSTICK.csr = (TICKINT_OFFSET) | (CLKSOURCE_OFFSET);
+
 	//enable systick
 	SYSTICK.csr |= 1;
 	
