@@ -17,6 +17,7 @@ int main(void) {
     uart0_init();
     //spi0_init();
     rtc_init();
+    adc_init();
     rtc_set_datetime(3, 5, 2025, 10, 45, 0);
 
     return 0;
