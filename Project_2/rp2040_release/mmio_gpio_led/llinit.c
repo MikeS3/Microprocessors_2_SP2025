@@ -9,7 +9,7 @@
 
 #include <resets.h>
 #include "uart0.h"
-
+#include "dma.h"
 
 #include <uart.h>
 
@@ -40,6 +40,9 @@ void start_unresets(void) {
 	//lift rtc out of reset
 	RESETS.reset &= ~(1 << RESETS_rtc);
 
+	/* lift DMA out of reset */
+	RESETS.reset &= ~(1 << RESETS_dma);
+
 
 
 }
@@ -51,6 +54,8 @@ void finish_unresets(void) {
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_pll_sys);
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_pio0);
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_rtc);
+	loop_until_bit_is_set(RESETS.reset_done, RESETS_dma);
+
 
 }
 
@@ -61,8 +66,21 @@ void clocks_init(void)
 	loop_until_bit_is_set(XOSC.status, XOSC_stable);
 	//Enable Peripheral Clock and set to XOSC
 	CLOCKS.clk_peri_ctrl = (1u << CLOCKS_enable) | (CLOCKS_PERI_xosc_clksrc);
+	CLOCKS.clk_adc_ctrl = (1u << CLOCKS_enable) | (CLOCKS_ADC_clk_clksrc_pll_usb);
+	CLOCKS.clk_rtc_ctrl = (1u << CLOCKS_enable) | (CLOCKS_RTC_xosc_clksrc);
 
+	/** switch system clock to XOSC */
+	/* first set the clock to use the reference clock */
+	CLOCKS.clk_sys_ctrl &= ~(1 << CLOCKS_SYS_CTRL_SRC);
+	loop_until_bit_is_set(CLOCKS.clk_sys_selected, 0);
 
+	/* then set the aux multiplexer */
+	CLOCKS.clk_sys_ctrl =
+			(CLOCKS_SYS_CTRL_XOSC_CLKSRC << CLOCKS_SYS_CTRL_AUXSRC_OFFSET);
+	/* then set the glitchless mux */
+	CLOCKS.clk_sys_ctrl |= (CLOCKS_SYS_CTRL_CLKSRC_CLK_SYS_AUX);
+	/* and wait for it to settle */
+	loop_until_bit_is_set(CLOCKS.clk_sys_selected, 1);
 
 }
 

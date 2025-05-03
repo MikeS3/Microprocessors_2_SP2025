@@ -54,8 +54,17 @@ void pio_init(void) {
 				(1u << PIO_SM_SHIFTCTRL_AUTOPULL);
 
 	/* TODO: set clock divider for FSM0 */
-	PIO0.sm[0].clkdiv = (15 << 16); //1.25 at 10FSM would need about 8MHZ and 120/8 = 15
+/* set autoshift behavior, 24 bits at a time */
+PIO0.sm[0].shiftctrl |=
+(24u << PIO_SM_SHIFTCTRL_PULL_THRESH_OFFSET)
+|	(1u << PIO_SM_SHIFTCTRL_AUTOPULL);
 
+/* shift from the left */
+PIO0.sm[0].shiftctrl &= ~(1u << PIO_SM_SHIFTCTRL_OUT_SHIFTDIR);
+
+/* TODO: set clock divider for FSM0 */
+PIO0.sm[0].clkdiv = (1u << PIO_SM_CLKDIV_INT_OFFSET) |
+			(128u << PIO_SM_CLKDIV_FRAC_OFFSET);
 
 
 	PIO0.ctrl = 0;

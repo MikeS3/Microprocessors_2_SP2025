@@ -19,9 +19,5 @@ int main(void) {
     rtc_init();
     rtc_set_datetime(3, 5, 2025, 10, 45, 0);
 
-    //enable systick
-    SYSTICK.csr |= 1;
-    //enable systick interrupt:
-    SYSTICK.csr |= TICKINT_OFFSET;
     return 0;
 }
