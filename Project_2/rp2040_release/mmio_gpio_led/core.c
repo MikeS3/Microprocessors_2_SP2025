@@ -9,7 +9,7 @@
 #include <uart.h>
 #include <systick.h>
 #include "llinit.h"
-#include "adc.c"
+#include "adc.h"
 
 //Using GCC macro to take the string of time at compiling, and convert it to numbers
 #define HOURS       ((__TIME__[0] - '0') * 10 + (__TIME__[1] - '0'))
