@@ -109,6 +109,13 @@ extern struct {
 } CLOCKS;
 
 
+#define CLOCKS_SYS_CTRL_SRC 		(0)
+
+#define CLOCKS_SYS_CTRL_XOSC_CLKSRC (3)
+
+#define CLOCKS_SYS_CTRL_AUXSRC_OFFSET 		(5)
+
+#define CLOCKS_SYS_CTRL_CLKSRC_CLK_SYS_AUX	(1)
 
 #define CLOCKS_GPOUT_clksrc_pll_sys	((0) << (5))
 

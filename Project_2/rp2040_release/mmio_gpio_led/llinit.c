@@ -43,6 +43,9 @@ void start_unresets(void) {
 	/* lift DMA out of reset */
 	RESETS.reset &= ~(1 << RESETS_dma);
 
+	/* lift DMA out of reset */
+	RESETS.reset &= ~(1 << RESETS_adc);
+
 
 
 }
@@ -55,6 +58,8 @@ void finish_unresets(void) {
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_pio0);
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_rtc);
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_dma);
+	loop_until_bit_is_set(RESETS.reset_done, RESETS_adc);
+
 
 
 }

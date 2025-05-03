@@ -2,7 +2,7 @@
 
 #define ADC_BASE 0x4004C000
 #define REG32(addr) (*(volatile unsigned *)(addr))
-
+#if 0
 // Bind the ADC struct to the hardware register base
 volatile struct {
     volatile unsigned cs;
@@ -15,7 +15,7 @@ volatile struct {
     volatile unsigned intf;
     volatile unsigned ints;
 } * const ADC = (void *)ADC_BASE;
-
+#endif
 void adc_init(void) {
     // Enable the ADC
     ADC.cs = ADC_CS_EN;
