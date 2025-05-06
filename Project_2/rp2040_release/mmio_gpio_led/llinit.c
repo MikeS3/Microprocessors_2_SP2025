@@ -43,7 +43,7 @@ void start_unresets(void) {
 	/* lift DMA out of reset */
 	RESETS.reset &= ~(1 << RESETS_dma);
 
-	/* lift DMA out of reset */
+	/* lift ADC out of reset */
 	RESETS.reset &= ~(1 << RESETS_adc);
 
 
