@@ -29,22 +29,22 @@ void start_unresets(void) {
 
     //RESETS.reset &= ~(1u << RESETS_spi0);
 
-
 	/* lift system PLL out of reset */
-
 	RESETS.reset &= ~(1u << RESETS_pll_sys);
 
 	//lift pio out of reset
 	RESETS.reset &= ~(1 << RESETS_pio0);
 
+	//lift I2C0 out of RESET
+	RESETS.reset &= ~(1 << RESETS_i2c0);
 	//lift rtc out of reset
-	RESETS.reset &= ~(1 << RESETS_rtc);
+	//RESETS.reset &= ~(1 << RESETS_rtc);
 
 	/* lift DMA out of reset */
-	RESETS.reset &= ~(1 << RESETS_dma);
+	//RESETS.reset &= ~(1 << RESETS_dma);
 
 	/* lift ADC out of reset */
-	RESETS.reset &= ~(1 << RESETS_adc);
+	//RESETS.reset &= ~(1 << RESETS_adc);
 
 
 
@@ -52,13 +52,15 @@ void start_unresets(void) {
 void finish_unresets(void) {
 
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_reset_io_bank0);
-	//loop_until_bit_is_set(RESETS.reset_done, RESETS_uart0);
+	loop_until_bit_is_set(RESETS.reset_done, RESETS_uart0);
 	//loop_until_bit_is_set(RESETS.reset_done, RESETS_spi0);
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_pll_sys);
 	loop_until_bit_is_set(RESETS.reset_done, RESETS_pio0);
-	loop_until_bit_is_set(RESETS.reset_done, RESETS_rtc);
-	loop_until_bit_is_set(RESETS.reset_done, RESETS_dma);
-	loop_until_bit_is_set(RESETS.reset_done, RESETS_adc);
+	//loop_until_bit_is_set(RESETS.reset_done, RESETS_rtc);
+	//loop_until_bit_is_set(RESETS.reset_done, RESETS_dma);
+	//loop_until_bit_is_set(RESETS.reset_done, RESETS_adc);
+	loop_until_bit_is_set(RESETS.reset_done, RESETS_i2c0);
+	//RESETS.reset &= ~(1 << RESETS_i2c1);
 
 
 

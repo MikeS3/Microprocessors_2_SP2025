@@ -6,6 +6,15 @@
 #include "tm1637.h"
 #include "resets.h"
 
+void i2c_init(void){
+	//disable i2c
+	//enable  master
+	//enable  fifo
+	//enable //disable slave 
+	return;
+}
+
+#if 0
 #define I2C_READ_BIT_SHIFT (0)
 
 #define TM1637_CMD1		(0x40) // 0x40 data command
@@ -86,3 +95,4 @@ uint8_t i2c_read_stop(void) {
 
 	return I2C0_BASE[I2C_IC_DATA_CMD];
 }
+	#endif
