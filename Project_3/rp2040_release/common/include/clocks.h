@@ -109,6 +109,13 @@ extern struct {
 } CLOCKS;
 
 
+#define CLOCKS_SYS_CTRL_SRC 		(0)
+
+#define CLOCKS_SYS_CTRL_XOSC_CLKSRC (3)
+
+#define CLOCKS_SYS_CTRL_AUXSRC_OFFSET 		(5)
+
+#define CLOCKS_SYS_CTRL_CLKSRC_CLK_SYS_AUX	(1)
 
 #define CLOCKS_GPOUT_clksrc_pll_sys	((0) << (5))
 
@@ -147,6 +154,24 @@ extern struct {
 #define CLOCKS_PERI_clksrc_gpin0		((5) << (5))
 
 #define CLOCKS_PERI_clksrc_gpin1		((6) << (5))
+
+/* Add these definitions to your clocks.h file */
+
+/* Clock source definitions for ADC clock */
+#define CLOCKS_ADC_clksrc_pll_sys    ((0) << (5))
+#define CLOCKS_ADC_clksrc_gpin0      ((1) << (5))
+#define CLOCKS_ADC_clksrc_gpin1      ((2) << (5))
+#define CLOCKS_ADC_clk_clksrc_pll_usb ((3) << (5))
+#define CLOCKS_ADC_rosc_clksrc       ((4) << (5))
+#define CLOCKS_ADC_xosc_clksrc       ((5) << (5))
+
+/* Clock source definitions for RTC clock */
+#define CLOCKS_RTC_clksrc_pll_sys    ((0) << (5))
+#define CLOCKS_RTC_clksrc_gpin0      ((1) << (5))
+#define CLOCKS_RTC_clksrc_gpin1      ((2) << (5))
+#define CLOCKS_RTC_clksrc_pll_usb    ((3) << (5))
+#define CLOCKS_RTC_rosc_clksrc       ((4) << (5))
+#define CLOCKS_RTC_xosc_clksrc       ((5) << (5))
 
 
 

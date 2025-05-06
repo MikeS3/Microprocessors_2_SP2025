@@ -6,9 +6,9 @@
 		void __vector_ ## x (void)
 #define ISR(x) ISR_(x)
 
-#define SYSTICK_vect 15
 #define SPI0_vect	34
 #define SPI1_vect	35
+#define SYSTICK_vect	15
 #define UART0_vect	36
 #define UART1_vect	37
 

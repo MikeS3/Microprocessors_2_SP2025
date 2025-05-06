@@ -4,6 +4,5 @@
 #define SPI_CLOCK_PRESCALER
 
 void spi0_init(void);
-void spi0_send(unsigned short message);
 
 #endif

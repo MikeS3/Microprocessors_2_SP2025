@@ -4,72 +4,20 @@
 #include <resets.h>
 #include <uart.h>
 #include "uart0.h"
-#include "image.h"
 
 /* register the UART0 interrupt */
 ISR(UART0_vect) {
-    static unsigned char checksum;
-    // static enum { idle, size_1, size_2, data, checksum } state;
-    static unsigned short index = 0;  // Index to track position in the frame
-    static unsigned char image_index = 0;  // Which image buffer to use (0 or 1)
-    
-    unsigned char byte = UART0.uartdr;
-    
-    // Process byte based on index position in the frame
-    switch(index) {
-        case 0:  // Start byte
-            if(byte == 0x46) {  // Check for start byte (0x46)
-                checksum = byte;  // Reset and initialize checksum with start byte
-                img[!current_image].index = 0;  // Reset data index
-                index++;          // Move to next byte
-            }
+	static unsigned char checksum;
+	unsigned char byte = UART0.uartdr;
+	//UART state machine
 
-			break;
-            
-        case 1:  // Length MSB
-            img[!current_image].size = byte << 8;  // Store MSB of length
-            checksum += byte;    // Add to checksum
-            index++;             // Move to next byte
-            break;
-            
-        case 2:  // Length LSB
-            img[!current_image].size |= byte;      // Store LSB of length
-            img[!current_image].size += 1;         // Adjust length (payload size minus one)
-            checksum += byte;    // Add to checksum
-            index++;             // Move to next byte (start of data)
-            break;
-            
-        default:
-            // Data or checksum bytes
-            if(index < (img[!current_image].size + 3)) {  // Data bytes (offset 3 to length+2)
-                // Store data byte in the image structure
-                img[!current_image].data[index - 3] = byte;  // Adjust index to start at 0 for buffer
-                checksum += byte;                        // Add to checksum
-            } else if(index == (img[!current_image].size + 3)) {  // Checksum byte
-                // Verify checksum
-                if((byte + checksum) == 0) {
-                    // Checksum matches, frame is valid
-                    //set Spi interrupt image to switch
-                    current_image = !current_image;
-                                        
-                } else {
-                    // Checksum error handling
-                    
-                }
-                
-                // Reset index for next frame regardless of checksum result
-                index = 0;
-                break;
-            }
-            
-            index++;  // Move to next byte
-            break;
-    }
-    
-    // Safety check - if we somehow get an invalid index, reset to 0
-    if(index > (img[!current_image].size + 3) && index > 3) {
-        index = 0;
-    }
+	if(byte = 0x46) {
+		checksum = 0;
+	}
+	/* Run checksum to make sure data is valid */
+
+	//Set SPI0_vect Pending
+	//NVIC_ISPR = 1 << NVIC_BIT(SPI0_vect);
 }
 
 void uart0_init(void) {
