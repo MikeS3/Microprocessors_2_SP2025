@@ -4,11 +4,12 @@
 #include <stdbool.h>
 #include "interrupt.h"
 #include "resets.h"
+#include "bitmanip.h"
+// Define external oscillator frequency in Hz
+#define XOSC_FREQ_HZ 12000000
 
-// Define this macro if it's not defined elsewhere
-#ifndef loop_until_bit_is_set
-#define loop_until_bit_is_set(sfr, bit) do { } while (!(sfr & (1u << bit)))
-#endif
+// Flag to track RTC interrupts
+volatile bool rtc_interrupt_occurred = false;
 
 /** rtc_init: Initializes the RTC peripheral */
 void rtc_init(void) {
@@ -17,10 +18,16 @@ void rtc_init(void) {
     loop_until_bit_is_set(RESETS.reset_done, RESETS_rtc);
     
     // Set divider minus 1  
-    RTC.clkdiv_m1 = 0x7FFF;
+    RTC.clkdiv_m1 = XOSC_FREQ_HZ - 1;
     
     // Enable RTC
     RTC.ctrl = RTC_CTRL_LOAD | RTC_CTRL_ENABLE;
+
+    // Clear any pending interrupts
+    RTC.intf = RTC_INTR_BIT;
+    
+     // Debug message
+     uart0_puts("RTC initialized successfully\r\n");
 }
 
 void rtc_set_datetime(unsigned day, unsigned month, unsigned year, unsigned hours, unsigned minutes, unsigned seconds) {
@@ -58,25 +65,51 @@ void rtc_set_alarm(unsigned day, unsigned month, unsigned year, unsigned hour, u
                        ((min & 0x3F) << 8) |
                        (sec & 0x3F));
     
-    // Enable alarm interrupt
-    RTC.inte |= (1u << 0); // RTC_INTE_BIT
+    // Enable interrupt
+    RTC.inte |= RTC_INTR_BIT;
     
     // Enable global match
     RTC.irq_setup_0 |= (1u << 28); // RTC_MATCH_ENA
 }
 
 void rtc_clear_alarm(void) {
-    // Disable matching and alarm interrupt
-    RTC.irq_setup_0 &= ~(1u << 28); // RTC_MATCH_ENA
-    RTC.inte &= ~(1u << 0); // RTC_INTE_BIT
-    RTC.intf &= ~(1u << 0); // RTC_INTE_BIT
+    RTC.irq_setup_0 &= ~(1u << 28); // Disable match
+    RTC.inte &= ~RTC_INTR_BIT;     // Disable interrupt
+    RTC.intf = RTC_INTR_BIT;       // Clear any pending
 }
 
-/* RTC Interrupt Service Routine */
+void rtc_schedule_next_alarm(void) {
+    unsigned day, month, year, hours, minutes, seconds;
+    
+    // Get current time
+    rtc_get_datetime(&day, &month, &year, &hours, &minutes, &seconds);
+    
+    // Add 10 seconds for the next alarm
+    //seconds += 10;
+    //5 minute alarms
+    minutes += 5;
+    if (minutes >= 60) {
+        minutes -= 60;
+        hours += 1;
+    if (hours >= 24)
+        hours -= 24;
+
+    }
+    // Set the alarm
+    rtc_set_alarm(day, month, year, hours, minutes, seconds);
+}
+
+// Interrupt Service Routine for RTC
 ISR(RTC_IRQ_vect) {
-    if (RTC.irq_setup_0 & (1u << 29)) { // RTC_MATCH_ACTIVE
-        // Clear interrupt
-        RTC.intf = (1u << 0); // RTC_INTE_BIT
-        // Do something, like toggle LED or signal event
+    // Confirm it's the RTC match interrupt
+    if (RTC.intr & RTC_INTR_BIT) {
+        // Clear interrupt flag
+        RTC.intf = RTC_INTR_BIT;
+
+        rtc_interrupt_occurred = true;
+
+        uart0_puts("RTC Interrupt triggered!\r\n");
+
+        rtc_schedule_next_alarm();
     }
 }

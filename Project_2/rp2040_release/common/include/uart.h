@@ -29,6 +29,7 @@ extern struct {
 #define UART_LCR_H_FEN	(4)
 
 #define UART_FR_BUSY	(3)
+#define UART_FR_RXFE    (4)
 #define UART_FR_TXFF	(5)
 
 
@@ -36,7 +37,14 @@ extern struct {
 #define UART_CR_TXE			(8)
 #define UART_CR_RXE			(9)
 
+#define UART_IMSC_RTIM		(6)
 #define UART_IMSC_TXIM		(5)
 #define UART_IMSC_RXIM		(4)
+
+#define UART_RIS_TXRIS	(5)
+#define UART_RIS_RXRIS	(4)
+
+#define UART_ICR_TXICR	(5)
+#define UART_ICR_RXICR	(4)
 
 #endif

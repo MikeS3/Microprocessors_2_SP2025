@@ -2,6 +2,7 @@
 #define RTC_H__
 
 #include "resets.h"
+#include <stdbool.h>
 
 #define RTC_BASE 0x4005C000
 
@@ -31,6 +32,8 @@ extern struct {
     volatile unsigned intf;            // 0x28
     volatile unsigned ints;            // 0x2C
 } RTC;
+// Flag to track RTC interrupts
+extern volatile bool rtc_interrupt_occurred;
 
 // Function prototypes
 void rtc_init(void);
@@ -38,5 +41,5 @@ void rtc_set_datetime(unsigned day, unsigned month, unsigned year, unsigned hour
 void rtc_get_datetime(unsigned* day, unsigned* month, unsigned* year, unsigned* hours, unsigned* minutes, unsigned* seconds);
 void rtc_set_alarm(unsigned day, unsigned month, unsigned year, unsigned hours, unsigned minutes, unsigned seconds);
 void rtc_clear_alarm(void);
-
+void rtc_schedule_next_alarm(void);
 #endif // RTC_H__

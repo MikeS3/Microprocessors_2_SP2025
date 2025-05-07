@@ -19,6 +19,6 @@ extern struct {
 #define RESETS_rtc			(15)
 #define RESETS_dma			(2)
 #define RESETS_adc			(0)
-
+#define RESETS_i2c0			(3)
 
 #endif	/* RESETS_H__ */
