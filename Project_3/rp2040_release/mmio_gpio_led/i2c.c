@@ -52,24 +52,30 @@ void i2c_write(uint8_t register_address, uint8_t* send_buffer, uint8_t bytes_to_
 } 
 void i2c_write_read(uint8_t register_address, uint8_t* read_buffer, uint8_t bytes_to_read){ // really a write read
 
-	I2C0.data_cmd = register_address | (IC_DATA_CMD_CMD); // first write register address and write bit
+	I2C0.data_cmd = register_address & ~(IC_DATA_CMD_CMD); // first write register address and write bit
+
+	//Send restart condition
 
 	while (!(I2C0.status & IC_STATUS_TFE)); // wait for Transmit FIFO to empty
 
+		//read 6 times
+		/*
 	for(int i=0; i < bytes_to_read- 1; i++){ //  send read for every byte we need
 
 		I2C0.data_cmd = IC_DATA_CMD_CMD;
 	}
 	I2C0.data_cmd = IC_DATA_CMD_STOP | IC_DATA_CMD_CMD; // send read for last byte, and stop bit
-
+*/
+	I2C0.data_cmd = IC_DATA_CMD_CMD; // send read
 
 	for(int i=0; i < bytes_to_read; i++){
 
-	while(!(I2C0.status | IC_STATUS_RFNE)); // while Receive fifo empty
+	//while(!(I2C0.status | IC_STATUS_RFNE)); // while Receive fifo empty
 
 	read_buffer[i] = (uint8_t)(I2C0.data_cmd & IC_DATA_CMD_MASK);
 
 	}
+	I2C0.data_cmd = IC_DATA_CMD_CMD | IC_DATA_CMD_STOP; //send stop after read/
 
 }
 
