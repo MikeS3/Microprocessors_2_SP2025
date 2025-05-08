@@ -74,7 +74,8 @@ void rtc_set_alarm(unsigned day, unsigned month, unsigned year, unsigned hour, u
     
     // Enable interrupt
     RTC.inte |= RTC_INTR_BIT;
-    
+    NVIC_ISER = 1u << NVIC_BIT(RTC_vect);
+
     // Enable global match
     RTC.irq_setup_0 |= (1u << 28); // RTC_MATCH_ENA
 }
