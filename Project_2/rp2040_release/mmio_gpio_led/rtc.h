@@ -14,7 +14,7 @@
 
 // IRQ vector number
 #define RTC_INTR_BIT             (1u << 0)
-#define RTC_IRQ_NUM           20
+#define RTC_IRQ_NUM           41
 #define RTC_IRQ_vect          RTC_IRQ_NUM
 
 // RTC peripheral struct

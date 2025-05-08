@@ -6,13 +6,12 @@
 		void __vector_ ## x (void)
 #define ISR(x) ISR_(x)
 
-#define RTC_vect   25 
 #define SPI0_vect	34
 #define SPI1_vect	35
 #define SYSTICK_vect	15
 #define UART0_vect	36
 #define UART1_vect	37
-#define RTC_vect	45
+#define RTC_vect	41
 
 #define NVIC_BIT(x)	((x) - (16))
 
