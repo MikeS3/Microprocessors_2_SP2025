@@ -1,6 +1,10 @@
 #ifndef I2C_H__
 #define I2C_H__
 
+void i2c_init(void);
+void i2c_write(uint8_t, uint8_t*, uint8_t );
+void i2c_write_read(uint8_t, uint8_t*, uint8_t); // really a write read
+
 extern struct {
 /* 00 */	volatile unsigned con;
 /* 04 */	volatile unsigned tar;
