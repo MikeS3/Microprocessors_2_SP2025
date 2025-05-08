@@ -22,6 +22,7 @@
 #define SECONDS     ((__TIME__[6] - '0') * 10 + (__TIME__[7] - '0'))
 
 unsigned num[6] = {0};
+
 int main(void) {
     low_level_init();
     //INITIALIZE UART rtc and SPI
@@ -30,6 +31,7 @@ int main(void) {
     //adc_init();
     i2c_init();
     mpu6050_init();
+
     uint8_t acceleration[6];
     while(1)
     {
@@ -44,7 +46,5 @@ int main(void) {
 
     }
 
-
-	SIO. = (1u << GPIO_TRIGGER);
     return 0;
 }
