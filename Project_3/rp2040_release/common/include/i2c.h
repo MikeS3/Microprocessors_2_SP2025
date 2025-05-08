@@ -57,4 +57,31 @@ extern struct {
 // /* fc */	volatile unsigned ic_comp_type;
 } I2C0, I2C1;
 
+#define IC_CON_SLAVE_DISABLE    (1 << 6)
+#define IC_CON_RESTART_EN       (1 << 5)
+#define IC_CON_ADDRESS_7BITS     (1 << 3) // set to 0
+#define IC_CON_SPEED            (1 << 1) //set to standard speed 100kbits
+#define IC_CON_MASTER_MODE      (1)
+
+#define IC_TAR_OFFSET           (0)
+
+#define IC_ENABLE               (0) // 0 to disable 1 to enable
+
+#define IC_STATUS_MST_ACTIVITY  (1 << 5)
+#define IC_STATUS_RFNE          (1 << 3) // Recieve FIFO NOT EMPTY
+#define IC_STATUS_TFE           (1 << 2) //Transmit FIFO Empty
+
+#define IC_TXFLR_OFFSET         (0) //5 bytes contains the number of valid entries in transmit FIFO
+
+#define IC_RXFLR_OFFSET         (0) //5 bytes contains the number of valid entries in recieve FIFO
+
+#define IC_DATA_CMD_MASK        (0xFF)
+#define IC_DATA_CMD_CMD         (1 << 8) //1 for master read 0 for master write    
+#define IC_DATA_CMD_STOP        (1 << 9) //STOP bit
+#define IC_DATA_CMD_DAT         (0)
+
+#define I2C_SDA_GPIO            (8)
+#define I2C_SCL_GPIO            (9)
+
+
 #endif	/* I2C_H__ */

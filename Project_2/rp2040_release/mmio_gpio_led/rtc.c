@@ -34,6 +34,7 @@ void rtc_init(void) {
     
      // Debug message
      //uart0_puts("RTC initialized successfully\r\n");
+     NVIC_ISER = 1 << NVIC_BIT(RTC_vect);
 }
 
 void rtc_set_datetime(unsigned day, unsigned month, unsigned year, unsigned hours, unsigned minutes, unsigned seconds) {
@@ -123,15 +124,17 @@ void rtc_schedule_next_alarm(void) {
 }
 
 
+// Define a volatile counter variable to track alarms
+volatile unsigned int rtc_alarm_count = 0; 
+
 // Interrupt Service Routine for RTC
-ISR(RTC_IRQ_vect) {
-    // Confirm it's the RTC match interrupt
-    if (RTC.intr & RTC_INTR_BIT) {
-        // Clear interrupt flag
-        RTC.intf = RTC_INTR_BIT;
+ISR(RTC_vect) {
+    // 1) Clear the match interrupt flag
+    RTC.intf = RTC_INTR_BIT;
 
-        rtc_interrupt_occurred = true;
+    // 2) Increment the counter to track how many alarms occurred
+    rtc_alarm_count++;
 
-        rtc_schedule_next_alarm();
-    }
+    // 3) Schedule the next alarm for the next minute
+    rtc_schedule_next_alarm();
 }

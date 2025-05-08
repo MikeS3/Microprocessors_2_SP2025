@@ -11,7 +11,7 @@
 #define SYSTICK_vect	15
 #define UART0_vect	36
 #define UART1_vect	37
-
+#define RTC_vect	45
 #define NVIC_BIT(x)	((x) - (16))
 
 extern volatile unsigned NVIC_ISER;

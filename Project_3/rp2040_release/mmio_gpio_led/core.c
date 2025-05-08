@@ -16,41 +16,6 @@
 #include "mpu6050.h"
 
 
-
-#define GPIO_TRIGGER	(16)
-
-
-
-
-
-void pio_start(void);
-
-void dma_tx(void);
-
-
-
-/* dirty software delay loop */
-
-static inline void delay(unsigned n) {
-
-	asm volatile (
-
-		"1:	sub %[r0], #1"	"\n"
-
-		"	bne 1b"
-
-		: [r0]"+r"(n)
-
-		:
-
-		: "memory"
-
-	);
-
-}
-
-	
-
 //Using GCC macro to take the string of time at compiling, and convert it to numbers
 #define HOURS       ((__TIME__[0] - '0') * 10 + (__TIME__[1] - '0'))
 #define MINUTES(x) ((x[3] - '0') * 10 + (x[4] - '0'))
@@ -62,7 +27,22 @@ int main(void) {
     //INITIALIZE UART rtc and SPI
     //uart0_init();
     //spi0_init();
-    adc_init();
+    //adc_init();
+    i2c_init();
+    mpu6050_init();
+    uint8_t acceleration[6];
+    while(1)
+    {
+        mpu6050_get_acc(acceleration);
+        num[0] = acceleration[0];
+        num[1] = acceleration[1];
+        num[2] = acceleration[2];
+        num[3] = acceleration[3];
+        num[4] = acceleration[4];
+        num[5] = acceleration[5];
+        num[6] = acceleration[6];
+
+    }
 
 
 	SIO. = (1u << GPIO_TRIGGER);

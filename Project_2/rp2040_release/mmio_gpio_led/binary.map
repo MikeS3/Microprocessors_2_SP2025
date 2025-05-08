@@ -14,6 +14,8 @@ Discarded input sections
  .bss           0x00000000        0x0 rtc.o
  .text.rtc_clear_alarm
                 0x00000000       0x20 rtc.o
+ .bss.rtc_interrupt_occurred
+                0x00000000        0x1 rtc.o
  .text          0x00000000        0x0 dma.o
  .data          0x00000000        0x0 dma.o
  .bss           0x00000000        0x0 dma.o
@@ -21,6 +23,22 @@ Discarded input sections
                 0x00000000       0x1c dma.o
  .init_array.00105
                 0x00000000        0x4 dma.o
+ .text.dma_tx   0x00000000       0x30 dma.o
+ .bss.offset.0  0x00000000        0x2 dma.o
+ .rodata.dma_data
+                0x00000000       0x40 dma.o
+ .debug_info    0x00000000      0x3e2 dma.o
+ .debug_abbrev  0x00000000      0x133 dma.o
+ .debug_aranges
+                0x00000000       0x28 dma.o
+ .debug_rnglists
+                0x00000000       0x19 dma.o
+ .debug_line    0x00000000       0xc7 dma.o
+ .debug_str     0x00000000      0x264 dma.o
+ .comment       0x00000000       0x1f dma.o
+ .debug_frame   0x00000000       0x38 dma.o
+ .ARM.attributes
+                0x00000000       0x2c dma.o
  .text          0x00000000        0x0 pio-handler.o
  .data          0x00000000        0x0 pio-handler.o
  .bss           0x00000000        0x0 pio-handler.o
@@ -60,7 +78,7 @@ Linker script and memory map
  *(.vector_table)
  .vector_table  0x10000100       0xc0 ../common/lib/rp2040-vectors.o
 
-.text           0x100001c0      0x394
+.text           0x100001c0      0x35c
  *(.text)
  *(.text.*)
  .text.start_unresets
@@ -76,131 +94,125 @@ Linker script and memory map
                 0x100002a4       0x10 llinit.o
                 0x100002a4                low_level_init
  .text.startup.main
-                0x100002b4       0x6c core.o
+                0x100002b4       0x5c core.o
                 0x100002b4                main
  .text.rtc_init
-                0x10000320       0x48 rtc.o
-                0x10000320                rtc_init
+                0x10000310       0x54 rtc.o
+                0x10000310                rtc_init
  .text.rtc_set_datetime
-                0x10000368       0x24 rtc.o
-                0x10000368                rtc_set_datetime
+                0x10000364       0x24 rtc.o
+                0x10000364                rtc_set_datetime
  .text.rtc_get_datetime
-                0x1000038c       0x3c rtc.o
-                0x1000038c                rtc_get_datetime
+                0x10000388       0x3c rtc.o
+                0x10000388                rtc_get_datetime
  .text.rtc_set_alarm
-                0x100003c8       0x70 rtc.o
-                0x100003c8                rtc_set_alarm
+                0x100003c4       0x70 rtc.o
+                0x100003c4                rtc_set_alarm
  .text.rtc_schedule_next_alarm
-                0x10000438       0x5e rtc.o
-                0x10000438                rtc_schedule_next_alarm
- *fill*         0x10000496        0x2 
- .text.__vector_20
-                0x10000498       0x20 rtc.o
-                0x10000498                __vector_20
- .text.dma_tx   0x100004b8       0x30 dma.o
-                0x100004b8                dma_tx
+                0x10000434       0x5a rtc.o
+                0x10000434                rtc_schedule_next_alarm
+ *fill*         0x1000048e        0x2 
+ .text.__vector_45
+                0x10000490       0x20 rtc.o
+                0x10000490                __vector_45
  .text.pio_start
-                0x100004e8       0x28 pio-handler.o
-                0x100004e8                pio_start
- .text.__reset  0x10000510       0x40 ../common/lib/rp2040-crt.o
-                0x10000510                __reset
+                0x100004b0       0x28 pio-handler.o
+                0x100004b0                pio_start
+ .text.__reset  0x100004d8       0x40 ../common/lib/rp2040-crt.o
+                0x100004d8                __reset
  .text.__bad_interrupt
-                0x10000550        0x4 ../common/lib/rp2040-crt.o
-                0x10000550                __vector_38
-                0x10000550                __vector_22
-                0x10000550                __vector_28
-                0x10000550                __vector_32
-                0x10000550                __vector_34
-                0x10000550                __vector_24
-                0x10000550                __vector_12
-                0x10000550                __vector_46
-                0x10000550                __bad_interrupt
-                0x10000550                __vector_6
-                0x10000550                __vector_31
-                0x10000550                __vector_35
-                0x10000550                __vector_39
-                0x10000550                __vector_3
-                0x10000550                __vector_23
-                0x10000550                __vector_30
-                0x10000550                __vector_45
-                0x10000550                __vector_25
-                0x10000550                __vector_11
-                0x10000550                __vector_13
-                0x10000550                __vector_17
-                0x10000550                __vector_19
-                0x10000550                __vector_7
-                0x10000550                __vector_41
-                0x10000550                __vector_43
-                0x10000550                __vector_27
-                0x10000550                __vector_5
-                0x10000550                __vector_33
-                0x10000550                __vector_47
-                0x10000550                __vector_37
-                0x10000550                __vector_4
-                0x10000550                __vector_44
-                0x10000550                __vector_9
-                0x10000550                __vector_2
-                0x10000550                __vector_21
-                0x10000550                __vector_15
-                0x10000550                __vector_36
-                0x10000550                __vector_29
-                0x10000550                __vector_40
-                0x10000550                __vector_8
-                0x10000550                __vector_26
-                0x10000550                __vector_14
-                0x10000550                __vector_10
-                0x10000550                __vector_16
-                0x10000550                __vector_18
-                0x10000550                __vector_42
+                0x10000518        0x4 ../common/lib/rp2040-crt.o
+                0x10000518                __vector_38
+                0x10000518                __vector_22
+                0x10000518                __vector_28
+                0x10000518                __vector_32
+                0x10000518                __vector_34
+                0x10000518                __vector_24
+                0x10000518                __vector_12
+                0x10000518                __vector_46
+                0x10000518                __bad_interrupt
+                0x10000518                __vector_6
+                0x10000518                __vector_31
+                0x10000518                __vector_35
+                0x10000518                __vector_39
+                0x10000518                __vector_3
+                0x10000518                __vector_23
+                0x10000518                __vector_30
+                0x10000518                __vector_25
+                0x10000518                __vector_11
+                0x10000518                __vector_13
+                0x10000518                __vector_17
+                0x10000518                __vector_19
+                0x10000518                __vector_7
+                0x10000518                __vector_41
+                0x10000518                __vector_43
+                0x10000518                __vector_27
+                0x10000518                __vector_5
+                0x10000518                __vector_33
+                0x10000518                __vector_47
+                0x10000518                __vector_37
+                0x10000518                __vector_4
+                0x10000518                __vector_44
+                0x10000518                __vector_9
+                0x10000518                __vector_2
+                0x10000518                __vector_21
+                0x10000518                __vector_15
+                0x10000518                __vector_36
+                0x10000518                __vector_29
+                0x10000518                __vector_40
+                0x10000518                __vector_8
+                0x10000518                __vector_26
+                0x10000518                __vector_14
+                0x10000518                __vector_10
+                0x10000518                __vector_16
+                0x10000518                __vector_18
+                0x10000518                __vector_20
+                0x10000518                __vector_42
                 [!provide]                        PROVIDE (__text_end = .)
 
-.glue_7         0x10000554        0x0
- .glue_7        0x10000554        0x0 linker stubs
+.glue_7         0x1000051c        0x0
+ .glue_7        0x1000051c        0x0 linker stubs
 
-.glue_7t        0x10000554        0x0
- .glue_7t       0x10000554        0x0 linker stubs
+.glue_7t        0x1000051c        0x0
+ .glue_7t       0x1000051c        0x0 linker stubs
 
-.vfp11_veneer   0x10000554        0x0
- .vfp11_veneer  0x10000554        0x0 linker stubs
+.vfp11_veneer   0x1000051c        0x0
+ .vfp11_veneer  0x1000051c        0x0 linker stubs
 
-.v4_bx          0x10000554        0x0
- .v4_bx         0x10000554        0x0 linker stubs
+.v4_bx          0x1000051c        0x0
+ .v4_bx         0x1000051c        0x0 linker stubs
 
-.iplt           0x10000554        0x0
- .iplt          0x10000554        0x0 llinit.o
+.iplt           0x1000051c        0x0
+ .iplt          0x1000051c        0x0 llinit.o
 
-.rodata         0x10000580       0x40
+.rel.dyn        0x1000051c        0x0
+ .rel.iplt      0x1000051c        0x0 llinit.o
+
+.rodata         0x1000051c        0x0
  *(.rodata)
  *(.rodata.*)
- .rodata.dma_data
-                0x10000580       0x40 dma.o
-                0x100005c0                        . = ALIGN (0x4)
+                0x1000051c                        . = ALIGN (0x4)
 
-.rel.dyn        0x100005c0        0x0
- .rel.iplt      0x100005c0        0x0 llinit.o
-
-.data           0x20000000        0x0 load address 0x100005c0
+.data           0x20000000        0x0 load address 0x1000051c
                 0x20000000                        . = ALIGN (0x4)
                 0x20000000                        PROVIDE (__data_start = .)
  *(.data)
  *(.data.*)
                 0x20000000                        PROVIDE (__data_end = .)
                 0x20000000                        . = ALIGN (0x4)
-                0x100005c0                        PROVIDE (__data_load_start = LOADADDR (.data))
+                0x1000051c                        PROVIDE (__data_load_start = LOADADDR (.data))
 
-.igot.plt       0x20000000        0x0 load address 0x100005c0
+.igot.plt       0x20000000        0x0 load address 0x1000051c
  .igot.plt      0x20000000        0x0 llinit.o
 
-.bss            0x20000000        0x4 load address 0x100005c0
+.bss            0x20000000        0x4 load address 0x1000051c
                 0x20000000                        . = ALIGN (0x4)
                 0x20000000                        PROVIDE (__bss_start = .)
  *(.bss)
  *(.bss.*)
- .bss.rtc_interrupt_occurred
-                0x20000000        0x1 rtc.o
-                0x20000000                rtc_interrupt_occurred
- *fill*         0x20000001        0x1 
- .bss.offset.0  0x20000002        0x2 dma.o
+ .bss.rtc_alarm_count
+                0x20000000        0x4 rtc.o
+                0x20000000                rtc_alarm_count
                 0x20000004                        . = ALIGN (0x4)
                 0x20000004                        PROVIDE (__bss_end = .)
                 0x20042000                        PROVIDE (__ram_end = (ORIGIN (SRAM) + LENGTH (SRAM)))
@@ -220,9 +232,9 @@ Linker script and memory map
                 [!provide]                        PROVIDE (ADC = 0x4004c000)
                 [!provide]                        PROVIDE (SPI0 = 0x4003c000)
                 [!provide]                        PROVIDE (SPI01 = 0x40040000)
-                [!provide]                        PROVIDE (PPB = 0xe0000000)
+                0xe0000000                        PROVIDE (PPB = 0xe0000000)
                 [!provide]                        PROVIDE (SYSTICK = (PPB + 0xe010))
-                [!provide]                        PROVIDE (NVIC_ISER = (PPB + 0xe100))
+                0xe000e100                        PROVIDE (NVIC_ISER = (PPB + 0xe100))
                 [!provide]                        PROVIDE (NVIC_ISPR = (PPB + 0xe200))
                 0x50000000                        PROVIDE (DMA = 0x50000000)
                 0x50200000                        PROVIDE (PIO0 = 0x50200000)
@@ -238,23 +250,21 @@ LOAD ../common/lib/bl2.o
 OUTPUT(binary.elf elf32-littlearm)
 LOAD linker stubs
 
-.debug_info     0x00000000     0x1501
+.debug_info     0x00000000     0x10ee
  .debug_info    0x00000000      0x410 llinit.o
- .debug_info    0x00000410      0x366 core.o
- .debug_info    0x00000776      0x69f rtc.o
- .debug_info    0x00000e15      0x3e2 dma.o
- .debug_info    0x000011f7      0x2da pio-handler.o
- .debug_info    0x000014d1       0x30 ../common/lib/rp2040-crt.o
+ .debug_info    0x00000410      0x317 core.o
+ .debug_info    0x00000727      0x6bd rtc.o
+ .debug_info    0x00000de4      0x2da pio-handler.o
+ .debug_info    0x000010be       0x30 ../common/lib/rp2040-crt.o
 
-.debug_abbrev   0x00000000      0x635
+.debug_abbrev   0x00000000      0x4cf
  .debug_abbrev  0x00000000       0xa5 llinit.o
- .debug_abbrev  0x000000a5      0x19c core.o
- .debug_abbrev  0x00000241      0x16c rtc.o
- .debug_abbrev  0x000003ad      0x133 dma.o
- .debug_abbrev  0x000004e0      0x12f pio-handler.o
- .debug_abbrev  0x0000060f       0x26 ../common/lib/rp2040-crt.o
+ .debug_abbrev  0x000000a5      0x156 core.o
+ .debug_abbrev  0x000001fb      0x17f rtc.o
+ .debug_abbrev  0x0000037a      0x12f pio-handler.o
+ .debug_abbrev  0x000004a9       0x26 ../common/lib/rp2040-crt.o
 
-.debug_aranges  0x00000000      0x120
+.debug_aranges  0x00000000       0xf8
  .debug_aranges
                 0x00000000       0x38 llinit.o
  .debug_aranges
@@ -262,14 +272,12 @@ LOAD linker stubs
  .debug_aranges
                 0x00000058       0x50 rtc.o
  .debug_aranges
-                0x000000a8       0x28 dma.o
+                0x000000a8       0x28 pio-handler.o
  .debug_aranges
-                0x000000d0       0x28 pio-handler.o
- .debug_aranges
-                0x000000f8       0x28 ../common/lib/rp2040-crt.o
+                0x000000d0       0x28 ../common/lib/rp2040-crt.o
 
 .debug_rnglists
-                0x00000000       0xc7
+                0x00000000       0xae
  .debug_rnglists
                 0x00000000       0x25 llinit.o
  .debug_rnglists
@@ -277,36 +285,31 @@ LOAD linker stubs
  .debug_rnglists
                 0x00000038       0x37 rtc.o
  .debug_rnglists
-                0x0000006f       0x19 dma.o
+                0x0000006f       0x26 pio-handler.o
  .debug_rnglists
-                0x00000088       0x26 pio-handler.o
- .debug_rnglists
-                0x000000ae       0x19 ../common/lib/rp2040-crt.o
+                0x00000095       0x19 ../common/lib/rp2040-crt.o
 
-.debug_line     0x00000000      0x90d
+.debug_line     0x00000000      0x825
  .debug_line    0x00000000      0x226 llinit.o
- .debug_line    0x00000226       0xc4 core.o
- .debug_line    0x000002ea      0x317 rtc.o
- .debug_line    0x00000601       0xc7 dma.o
- .debug_line    0x000006c8      0x1cf pio-handler.o
- .debug_line    0x00000897       0x76 ../common/lib/rp2040-crt.o
+ .debug_line    0x00000226       0x99 core.o
+ .debug_line    0x000002bf      0x321 rtc.o
+ .debug_line    0x000005e0      0x1cf pio-handler.o
+ .debug_line    0x000007af       0x76 ../common/lib/rp2040-crt.o
 
-.debug_str      0x00000000      0x77c
- .debug_str     0x00000000      0x77c llinit.o
-                                0x49d (size before relaxing)
- .debug_str     0x0000077c      0x2bc core.o
- .debug_str     0x0000077c      0x52c rtc.o
- .debug_str     0x0000077c      0x25a dma.o
- .debug_str     0x0000077c      0x20b pio-handler.o
- .debug_str     0x0000077c       0x7b ../common/lib/rp2040-crt.o
+.debug_str      0x00000000      0x6ef
+ .debug_str     0x00000000      0x6ef llinit.o
+                                0x4a7 (size before relaxing)
+ .debug_str     0x000006ef      0x2b9 core.o
+ .debug_str     0x000006ef      0x550 rtc.o
+ .debug_str     0x000006ef      0x215 pio-handler.o
+ .debug_str     0x000006ef       0x8e ../common/lib/rp2040-crt.o
 
-.comment        0x00000000       0x26
- .comment       0x00000000       0x26 llinit.o
-                                 0x27 (size before relaxing)
- .comment       0x00000026       0x27 core.o
- .comment       0x00000026       0x27 rtc.o
- .comment       0x00000026       0x27 dma.o
- .comment       0x00000026       0x27 pio-handler.o
+.comment        0x00000000       0x1e
+ .comment       0x00000000       0x1e llinit.o
+                                 0x1f (size before relaxing)
+ .comment       0x0000001e       0x1f core.o
+ .comment       0x0000001e       0x1f rtc.o
+ .comment       0x0000001e       0x1f pio-handler.o
 
 .ARM.attributes
                 0x00000000       0x2a
@@ -317,33 +320,28 @@ LOAD linker stubs
  .ARM.attributes
                 0x00000058       0x2c rtc.o
  .ARM.attributes
-                0x00000084       0x2c dma.o
+                0x00000084       0x2c pio-handler.o
  .ARM.attributes
-                0x000000b0       0x2c pio-handler.o
+                0x000000b0       0x1c ../common/lib/rp2040-vectors.o
  .ARM.attributes
-                0x000000dc       0x1c ../common/lib/rp2040-vectors.o
+                0x000000cc       0x22 ../common/lib/rp2040-crt.o
  .ARM.attributes
-                0x000000f8       0x22 ../common/lib/rp2040-crt.o
- .ARM.attributes
-                0x0000011a       0x22 ../common/lib/bl2.o
+                0x000000ee       0x22 ../common/lib/bl2.o
 
-.debug_frame    0x00000000      0x1a8
+.debug_frame    0x00000000      0x16c
  .debug_frame   0x00000000       0x58 llinit.o
- .debug_frame   0x00000058       0x2c core.o
- .debug_frame   0x00000084       0xb4 rtc.o
- .debug_frame   0x00000138       0x38 dma.o
- .debug_frame   0x00000170       0x38 pio-handler.o
+ .debug_frame   0x00000058       0x28 core.o
+ .debug_frame   0x00000080       0xb4 rtc.o
+ .debug_frame   0x00000134       0x38 pio-handler.o
 
 .debug_loclists
-                0x00000000      0x157
+                0x00000000      0x13b
  .debug_loclists
-                0x00000000       0x1c core.o
+                0x00000000      0x101 rtc.o
  .debug_loclists
-                0x0000001c      0x101 rtc.o
- .debug_loclists
-                0x0000011d       0x3a pio-handler.o
+                0x00000101       0x3a pio-handler.o
 
 .debug_line_str
-                0x00000000       0x67
+                0x00000000       0x7a
  .debug_line_str
-                0x00000000       0x67 ../common/lib/rp2040-crt.o
+                0x00000000       0x7a ../common/lib/rp2040-crt.o

@@ -86,7 +86,7 @@ int main(void) {
 
 	IO_BANK0.io[GPIO_TRIGGER].ctrl = 5;
     SIO.gpio_oe_set = (1u << GPIO_TRIGGER);
-
+#if 0
 while(1) {
 
     /* trigger signal for oscilloscope debugging */
@@ -98,8 +98,9 @@ while(1) {
 
     dma_tx();
     /* and delay stuff */
-    delay(250000);
+    /delay(250000);
 
 }
+    #endif
     return 0;
 }
