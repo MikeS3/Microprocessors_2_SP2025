@@ -23,6 +23,7 @@ LDFLAGS :=	-Wl,--gc-sections \
 			-Wl,-Map=$(ELF:%.elf=%.map) \
 			-nostdlib
 
+
 CC := $(CROSS_COMPILE)gcc
 AS := $(CROSS_COMPILE)gcc
 LD := $(CROSS_COMPILE)gcc

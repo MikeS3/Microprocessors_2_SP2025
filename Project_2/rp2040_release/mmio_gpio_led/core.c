@@ -26,6 +26,10 @@
 
 void pio_start(void);
 void dma_tx(void);
+void low_level_init(void);
+void rtc_init(void);
+//void adc_init(void);
+//void uart0_init(void);
 
 /* dirty software delay loop */
 static inline void delay(unsigned n) {
@@ -56,8 +60,9 @@ unsigned current_temp;
 int main(void) {
     low_level_init();
     //INITIALIZE UART rtc and SPI
-    uart0_init();
-    adc_init();
+    //uart0_init();
+    //adc_init();
+    pio_start();
     rtc_init();
 
     // Set initial time from compile-time macros
@@ -66,19 +71,16 @@ int main(void) {
      // Get and print the current time
      unsigned day, month, year, hours, minutes, seconds;
     rtc_get_datetime(&day, &month, &year, &hours, &minutes, &seconds);
-    char time_str[40];
-    uart0_puts(time_str);
-    
+   
     // Schedule the first alarm (10 seconds from now)
-    uart0_puts("Scheduling first alarm (10-second interval)...\r\n");
+    //uart0_puts("Scheduling first alarm (10-second interval)...\r\n");
     
-    
-    
-     rtc_schedule_next_alarm();
-    
-    unsigned current_temp = adc_read(4); // read from Temp adc
-    current_temp +=1;
-    pio_start();
+    rtc_schedule_next_alarm();
+   
+    //adc_enable_temp_sensor(1);
+    //unsigned current_temp = adc_read(4); // read from Temp adc
+
+
 
 
 

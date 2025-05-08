@@ -1,5 +1,6 @@
 #ifndef ADC_H__
 #define ADC_H__
+#define ADC_BASE 0x4004C000
 
 // ADC Register Map
 extern struct {
