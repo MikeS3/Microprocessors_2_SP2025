@@ -73,7 +73,8 @@ void rtc_set_alarm(unsigned day, unsigned month, unsigned year, unsigned hour, u
     
     // Enable interrupt
     RTC.inte |= RTC_INTR_BIT;
-    
+    NVIC_ISER = 1u << NVIC_BIT(RTC_vect);
+
     // Enable global match
     RTC.irq_setup_0 |= (1u << 28); // RTC_MATCH_ENA
 }
@@ -123,15 +124,18 @@ void rtc_schedule_next_alarm(void) {
 }
 
 
+// Define a volatile counter variable to track alarms
+volatile unsigned int rtc_alarm_count = 0; 
+
 // Interrupt Service Routine for RTC
 ISR(RTC_IRQ_vect) {
-    // Confirm it's the RTC match interrupt
-    if (RTC.intr & RTC_INTR_BIT) {
-        // Clear interrupt flag
-        RTC.intf = RTC_INTR_BIT;
+    // 1) Clear the match interrupt flag
+    RTC.intf = RTC_INTR_BIT;
 
-        rtc_interrupt_occurred = true;
+    // 2) Increment the counter to track how many alarms occurred
+    rtc_alarm_count++;
 
-        rtc_schedule_next_alarm();
-    }
+    // 3) Schedule the next alarm for the next minute
+    rtc_schedule_next_alarm();
 }
+
