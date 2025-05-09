@@ -62,7 +62,8 @@ int main(void) {
     PIDController_Init(&pid);
 
     fixedpt setpoint = 0; // vertical acceleration must be 0
-    while(true)
+
+    while(true) // arbritrary sampling time for now
     {
 
     mpu6050_get_acc(acceleration); // get acceleration data
