@@ -27,7 +27,16 @@ Discarded input sections
  .bss.offset.0  0x00000000        0x2 dma.o
  .rodata.dma_data
                 0x00000000       0x40 dma.o
+ .debug_info    0x00000000      0x3e2 dma.o
+ .debug_abbrev  0x00000000      0x133 dma.o
+ .debug_aranges
+                0x00000000       0x28 dma.o
+ .debug_rnglists
+                0x00000000       0x19 dma.o
+ .debug_line    0x00000000       0xc7 dma.o
+ .debug_str     0x00000000      0x25a dma.o
  .comment       0x00000000       0x27 dma.o
+ .debug_frame   0x00000000       0x38 dma.o
  .ARM.attributes
                 0x00000000       0x2c dma.o
  .text          0x00000000        0x0 pio-handler.o
@@ -241,6 +250,60 @@ LOAD ../common/lib/bl2.o
 OUTPUT(binary.elf elf32-littlearm)
 LOAD linker stubs
 
+.debug_info     0x00000000     0x10ef
+ .debug_info    0x00000000      0x410 llinit.o
+ .debug_info    0x00000410      0x318 core.o
+ .debug_info    0x00000728      0x6bd rtc.o
+ .debug_info    0x00000de5      0x2da pio-handler.o
+ .debug_info    0x000010bf       0x30 ../common/lib/rp2040-crt.o
+
+.debug_abbrev   0x00000000      0x4cf
+ .debug_abbrev  0x00000000       0xa5 llinit.o
+ .debug_abbrev  0x000000a5      0x156 core.o
+ .debug_abbrev  0x000001fb      0x17f rtc.o
+ .debug_abbrev  0x0000037a      0x12f pio-handler.o
+ .debug_abbrev  0x000004a9       0x26 ../common/lib/rp2040-crt.o
+
+.debug_aranges  0x00000000       0xf8
+ .debug_aranges
+                0x00000000       0x38 llinit.o
+ .debug_aranges
+                0x00000038       0x20 core.o
+ .debug_aranges
+                0x00000058       0x50 rtc.o
+ .debug_aranges
+                0x000000a8       0x28 pio-handler.o
+ .debug_aranges
+                0x000000d0       0x28 ../common/lib/rp2040-crt.o
+
+.debug_rnglists
+                0x00000000       0xae
+ .debug_rnglists
+                0x00000000       0x25 llinit.o
+ .debug_rnglists
+                0x00000025       0x13 core.o
+ .debug_rnglists
+                0x00000038       0x37 rtc.o
+ .debug_rnglists
+                0x0000006f       0x26 pio-handler.o
+ .debug_rnglists
+                0x00000095       0x19 ../common/lib/rp2040-crt.o
+
+.debug_line     0x00000000      0x7fb
+ .debug_line    0x00000000      0x226 llinit.o
+ .debug_line    0x00000226       0x99 core.o
+ .debug_line    0x000002bf      0x2f7 rtc.o
+ .debug_line    0x000005b6      0x1cf pio-handler.o
+ .debug_line    0x00000785       0x76 ../common/lib/rp2040-crt.o
+
+.debug_str      0x00000000      0x6e5
+ .debug_str     0x00000000      0x6e5 llinit.o
+                                0x49d (size before relaxing)
+ .debug_str     0x000006e5      0x2af core.o
+ .debug_str     0x000006e5      0x546 rtc.o
+ .debug_str     0x000006e5      0x20b pio-handler.o
+ .debug_str     0x000006e5       0x7b ../common/lib/rp2040-crt.o
+
 .comment        0x00000000       0x26
  .comment       0x00000000       0x26 llinit.o
                                  0x27 (size before relaxing)
@@ -264,3 +327,21 @@ LOAD linker stubs
                 0x000000cc       0x22 ../common/lib/rp2040-crt.o
  .ARM.attributes
                 0x000000ee       0x22 ../common/lib/bl2.o
+
+.debug_frame    0x00000000      0x168
+ .debug_frame   0x00000000       0x58 llinit.o
+ .debug_frame   0x00000058       0x28 core.o
+ .debug_frame   0x00000080       0xb0 rtc.o
+ .debug_frame   0x00000130       0x38 pio-handler.o
+
+.debug_loclists
+                0x00000000      0x13b
+ .debug_loclists
+                0x00000000      0x101 rtc.o
+ .debug_loclists
+                0x00000101       0x3a pio-handler.o
+
+.debug_line_str
+                0x00000000       0x67
+ .debug_line_str
+                0x00000000       0x67 ../common/lib/rp2040-crt.o
