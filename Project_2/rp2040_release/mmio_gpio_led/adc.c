@@ -10,9 +10,8 @@ void adc_init(void) {
     ADC.cs  |= ADC_CS_ERR_STICKY;
 
     CLOCKS.clk_adc_ctrl = (1u << CLOCKS_enable) | (CLOCKS_ADC_clk_clksrc_pll_usb);
-
-    CLOCKS.clk_adc_div = ( 256 << 8) | 0x00;
-    //47999
+    CLOCKS.clk_adc_div = (256 << 8) | 0x00;
+    
     while (CLOCKS.clk_adc_selected != 0x1);
 }
 

@@ -34,7 +34,11 @@ void rtc_init(void) {
     
      // Debug message
      //uart0_puts("RTC initialized successfully\r\n");
-     NVIC_ISER = 1 << NVIC_BIT(RTC_vect);
+     /* provided that the RTC starts at all 0's */
+    RTC.irq_setup_1 = (1u << 8) | (1u << 29); /* match minute = 1 */
+    RTC.irq_setup_0 = (1u << 28);  /* enable global match */
+    RTC.inte = 1; /* enable the interrupt */
+    NVIC_ISER = 1u << NVIC_BIT(RTC_vect); /* and enable it on the NVIC */
 }
 
 void rtc_set_datetime(unsigned day, unsigned month, unsigned year, unsigned hours, unsigned minutes, unsigned seconds) {
@@ -55,7 +59,7 @@ void rtc_get_datetime(unsigned* day, unsigned* month, unsigned* year, unsigned* 
 
 void rtc_set_alarm(unsigned day, unsigned month, unsigned year, unsigned hour, unsigned min, unsigned sec) {
     // Disable match before setting
-    RTC.irq_setup_0 &= ~(1u << 28); // RTC_MATCH_ENA
+    //RTC.irq_setup_0 &= ~(1u << 28); // RTC_MATCH_ENA
     
     // Setup match fields
     RTC.irq_setup_0 = ((1u << 26) | // RTC_YEAR_ENA
@@ -74,7 +78,7 @@ void rtc_set_alarm(unsigned day, unsigned month, unsigned year, unsigned hour, u
     
 
     // Enable global match
-    RTC.irq_setup_0 |= (1u << 28); // RTC_MATCH_ENA
+    //RTC.irq_setup_0 |= (1u << 28); // RTC_MATCH_ENA
 }
 
 void rtc_clear_alarm(void) {
@@ -91,7 +95,7 @@ void rtc_schedule_next_alarm(void) {
 
 
 
-#define TEST_ALARM_10S 0  // Set to 0 for 5-minute alarm, 1 for 10-second test alarm
+#define TEST_ALARM_10S 0  // Set to 0 for 1-minute alarm, 1 for 10-second test alarm
 
 #if TEST_ALARM_10S 
     // test mode 10 seconds
