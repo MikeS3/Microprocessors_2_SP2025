@@ -12,10 +12,7 @@ void i2c_init(void){
 
 	//disable i2c
 	I2C0.enable = 0;
-<<<<<<< HEAD
-=======
 	//loop_until_bit_is_clear(I2C0.ic_enable_status, IC_ENABLE_STATUS);
->>>>>>> fa187da (Started PID implementation)
 
 	IO_BANK0.io[I2C_SDA_GPIO].ctrl = 3;
 	IO_BANK0.io[I2C_SCL_GPIO].ctrl = 3;
@@ -29,12 +26,8 @@ void i2c_init(void){
 	I2C0.tar = MPU6050_I2C_ADDRESS; // set slave address to MPU6050 address
 
 	//loop_until_bit_is_set(I2C0.con, //I2C0.con)
-<<<<<<< HEAD
-	I2C0.enable = 1;
-=======
 	//I2C0.enable = 1;
 	//loop_until_bit_is_set(I2C0.ic_enable_status, IC_ENABLE_STATUS);
->>>>>>> fa187da (Started PID implementation)
 	//enable  fifo
 	return;
 }
@@ -42,12 +35,9 @@ void i2c_init(void){
 //TODO need to change data type for send/read buffer Add error checking
 void i2c_write(uint8_t register_address, uint8_t* send_buffer, uint8_t bytes_to_send){
 
-<<<<<<< HEAD
-=======
 	// check if I2C is idle and if TX FIFO is empty
     //loop_until_bit_is_clear(I2C0.status, IC_STATUS_ACTIVITY);
     //loop_until_bit_is_set(I2C0.status, IC_STATUS_TFE);
->>>>>>> fa187da (Started PID implementation)
 	//send each byte
 	
 	I2C0.enable = 1;
