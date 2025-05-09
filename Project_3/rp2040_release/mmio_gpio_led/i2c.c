@@ -12,6 +12,10 @@ void i2c_init(void){
 
 	//disable i2c
 	I2C0.enable = 0;
+<<<<<<< HEAD
+=======
+	//loop_until_bit_is_clear(I2C0.ic_enable_status, IC_ENABLE_STATUS);
+>>>>>>> fa187da (Started PID implementation)
 
 	IO_BANK0.io[I2C_SDA_GPIO].ctrl = 3;
 	IO_BANK0.io[I2C_SCL_GPIO].ctrl = 3;
@@ -25,7 +29,12 @@ void i2c_init(void){
 	I2C0.tar = MPU6050_I2C_ADDRESS; // set slave address to MPU6050 address
 
 	//loop_until_bit_is_set(I2C0.con, //I2C0.con)
+<<<<<<< HEAD
 	I2C0.enable = 1;
+=======
+	//I2C0.enable = 1;
+	//loop_until_bit_is_set(I2C0.ic_enable_status, IC_ENABLE_STATUS);
+>>>>>>> fa187da (Started PID implementation)
 	//enable  fifo
 	return;
 }
@@ -33,7 +42,17 @@ void i2c_init(void){
 //TODO need to change data type for send/read buffer Add error checking
 void i2c_write(uint8_t register_address, uint8_t* send_buffer, uint8_t bytes_to_send){
 
+<<<<<<< HEAD
+=======
+	// check if I2C is idle and if TX FIFO is empty
+    //loop_until_bit_is_clear(I2C0.status, IC_STATUS_ACTIVITY);
+    //loop_until_bit_is_set(I2C0.status, IC_STATUS_TFE);
+>>>>>>> fa187da (Started PID implementation)
 	//send each byte
+	
+	I2C0.enable = 1;
+    loop_until_bit_is_set(I2C0.enable, IC_ENABLE_STATUS);
+
 	I2C0.data_cmd = register_address & ~(IC_DATA_CMD_CMD);//set data command to write (0) on first byte along with first register
 	//Do I need an 11 byte Mask to and with the data I am writing
 	//~(I2C_IC_DATA_CMD_CMD) how to set to 0 and combine with register address
@@ -48,27 +67,23 @@ void i2c_write(uint8_t register_address, uint8_t* send_buffer, uint8_t bytes_to_
 	//while(!(I2C0.status | IC_STATUS_TFE));
 		//loop until TX FIFO empty
 	//send STOP
-
+	I2C0.enable = 0;
+	loop_until_bit_is_clear(I2C0.ic_enable_status, IC_ENABLE_STATUS);
 } 
 void i2c_write_read(uint8_t register_address, uint8_t* read_buffer, uint8_t bytes_to_read){ // really a write read
 
+	// check if I2C is idle and if TX FIFO is empty
+    //loop_until_bit_is_clear(I2C0.status, IC_STATUS_ACTIVITY);
+    //loop_until_bit_is_set(I2C0.status, IC_STATUS_TFE);
+	I2C0.enable = 1;
+    loop_until_bit_is_set(I2C0.enable, IC_ENABLE_STATUS);
+
 	I2C0.data_cmd = register_address & ~(IC_DATA_CMD_CMD); // first write register address and write bit
 
-	//Send restart condition
-
-	while (!(I2C0.status & IC_STATUS_TFE)); // wait for Transmit FIFO to empty
-
-		//read 6 times
-		/*
-	for(int i=0; i < bytes_to_read- 1; i++){ //  send read for every byte we need
-
-		I2C0.data_cmd = IC_DATA_CMD_CMD;
-	}
-	I2C0.data_cmd = IC_DATA_CMD_STOP | IC_DATA_CMD_CMD; // send read for last byte, and stop bit
-*/
-	I2C0.data_cmd = IC_DATA_CMD_CMD; // send read
-
-	for(int i=0; i < bytes_to_read; i++){
+	// check if I2C is idle and if TX FIFO is empty
+    //loop_until_bit_is_clear(I2C0.status, IC_STATUS_ACTIVITY);
+    //loop_until_bit_is_set(I2C0.status, IC_STATUS_TFE);
+	for(int i=0; i < bytes_to_read -1; i++){
 
 	//while(!(I2C0.status | IC_STATUS_RFNE)); // while Receive fifo empty
 
@@ -76,6 +91,9 @@ void i2c_write_read(uint8_t register_address, uint8_t* read_buffer, uint8_t byte
 
 	}
 	I2C0.data_cmd = IC_DATA_CMD_CMD | IC_DATA_CMD_STOP; //send stop after read/
+
+	I2C0.enable = 0;
+	loop_until_bit_is_clear(I2C0.ic_enable_status, IC_ENABLE_STATUS);
 
 }
 

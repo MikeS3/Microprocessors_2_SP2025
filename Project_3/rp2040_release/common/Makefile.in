@@ -18,6 +18,7 @@ CFLAGS :=	-mcpu=cortex-m0plus \
 ASFLAGS :=	$(CFLAGS)
 
 LDFLAGS :=	-Wl,--gc-sections \
+			-mcpu=cortex-m0plus \
 			-Wl,-T../common/lib/rp2040.ld \
 			-Wl,-T../common/lib/ioregs.ld \
 			-Wl,-Map=$(ELF:%.elf=%.map) \

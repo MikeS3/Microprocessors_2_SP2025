@@ -67,9 +67,10 @@ extern struct {
 
 #define IC_ENABLE               (0) // 0 to disable 1 to enable
 
-#define IC_STATUS_MST_ACTIVITY  (1 << 5)
-#define IC_STATUS_RFNE          (1 << 3) // Recieve FIFO NOT EMPTY
-#define IC_STATUS_TFE           (1 << 2) //Transmit FIFO Empty
+#define IC_STATUS_MST_ACTIVITY  (5)
+#define IC_STATUS_RFNE          (3) // Recieve FIFO NOT EMPTY
+#define IC_STATUS_TFE           (2) //Transmit FIFO Empty
+#define IC_STATUS_ACTIVITY      (0)
 
 #define IC_TXFLR_OFFSET         (0) //5 bytes contains the number of valid entries in transmit FIFO
 
