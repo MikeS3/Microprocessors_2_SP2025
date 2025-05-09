@@ -33,13 +33,13 @@ ISR SVCALL_vect
 	
 
 	movs    r0, #0
-	mvns    r0, r0
+	mvns    r0, r0		//set r0 to -1 without syntrax error
 	b .Lreturn_from_svc
 
 .Lvalid_syscall:                 // Label for valid syscall path
 	ldr r5, =.Lsyscall_table     // r5 ← address of syscall table
-	lsls r4, 12              // r4 = r4 * 4 (byte offset — each entry is 4 bytes)
-	adds r5, r5, r4              // r5 = base address + offset (r5 = &table[syscall_no])
+	lsls r4, 12              // r12 has syscall# in it
+	adds r5, r5, r4              // r5 = base address + offset r4 is being used as offset
 	ldr r5, [r5, r4]                 // r5 ← contents at that address (i.e. function pointer)
 	blx r5                       // branch to function in r5 (syscall function)
 
