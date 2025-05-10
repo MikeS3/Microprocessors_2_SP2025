@@ -13,7 +13,7 @@ extern struct {
 #elif __ARM_ARCH == 6
 	const unsigned __reserved;
 #else
-#	error "architecture not supported
+#	error "architecture not supported"
 #endif
 	volatile unsigned shpr2;
 	volatile unsigned shpr3;

@@ -119,13 +119,15 @@ return_to_user:
 	ldmia r0!, {r4-r11}
 #elif __ARM_ARCH == 6
 //same as stmia but reverse
+adds r0, r0, #16 
 ldmia r0!, {r4-r7}      // Save r4-r7 to first half of allocated space
 
+subs r0, r0, #32 
 mov r8, r4
 mov r9, r5
 mov r10, r6
 mov r11, r7
-
+adds r0, r0, #16 
 ldmia r0!, {r4-r7}      // Store former r8-r11 values
 //#	warning "restore registers r4 to r11 from the process stack"
 #else
